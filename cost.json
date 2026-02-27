@@ -1,0 +1,228 @@
+{
+  "Phracon (1010)": [
+    [
+      {
+        "material": "Zeny",
+        "amount": 200
+      }
+    ]
+  ],
+  "Emveretarcon (1011)": [
+    [
+      {
+        "material": "Zeny",
+        "amount": 1000
+      }
+    ]
+  ],
+  "Oridecon (984)": [
+    [
+      {
+        "material": "Rough Oridecon (756)",
+        "amount": 5
+      }
+    ]
+  ],
+  "Elunium (985)": [
+    [
+      {
+        "material": "Rough Elunium (757)",
+        "amount": 5
+      }
+    ]
+  ],
+  "Bradium (6224)": [
+    [
+      {
+        "material": "Zeny",
+        "amount": 50000
+      },
+      {
+        "material": "Oridecon (984)",
+        "amount": 3
+      }
+    ]
+  ],
+  "Carnium (6223)": [
+    [
+      {
+        "material": "Zeny",
+        "amount": 50000
+      },
+      {
+        "material": "Elunium (985)",
+        "amount": 3
+      }
+    ],
+    [
+      {
+        "material": "Zeny",
+        "amount": 50000
+      },
+      {
+        "material": "Refined Bradium (6090)",
+        "amount": 1
+      }
+    ]
+  ],
+  "Etherium (1000331)": [
+    [
+      {
+        "material": "Zeny",
+        "amount": 10000
+      },
+      {
+        "material": "Etel Dust (1000322)",
+        "amount": 1
+      },
+      {
+        "material": "Elunium (985)",
+        "amount": 1
+      }
+    ]
+  ],
+  "Etherdeocon (1000332)": [
+    [
+      {
+        "material": "Zeny",
+        "amount": 10000
+      },
+      {
+        "material": "Etel Dust (1000322)",
+        "amount": 1
+      },
+      {
+        "material": "Oridecon (984)",
+        "amount": 1
+      }
+    ]
+  ],
+  "Etel Bradium (1000368)": [
+    [
+      {
+        "material": "Zeny",
+        "amount": 50000
+      },
+      {
+        "material": "Etel Dust (1000322)",
+        "amount": 3
+      },
+      {
+        "material": "Bradium (6224)",
+        "amount": 1
+      }
+    ]
+  ],
+  "Etel Carnium (1000370)": [
+    [
+      {
+        "material": "Zeny",
+        "amount": 50000
+      },
+      {
+        "material": "Etel Dust (1000322)",
+        "amount": 3
+      },
+      {
+        "material": "Carnium (6223)",
+        "amount": 1
+      }
+    ]
+  ],
+  "Enriched Etherium (1000333)": [
+    [
+      {
+        "material": "Zeny",
+        "amount": 20000
+      },
+      {
+        "material": "Etel Dust (1000322)",
+        "amount": 2
+      },
+      {
+        "material": "Enriched Elunium (6291)",
+        "amount": 1
+      }
+    ]
+  ],
+  "Enriched Etherdeocon (1000334)": [
+    [
+      {
+        "material": "Zeny",
+        "amount": 20000
+      },
+      {
+        "material": "Etel Dust (1000322)",
+        "amount": 2
+      },
+      {
+        "material": "Enriched Oridecon (7620)",
+        "amount": 1
+      }
+    ]
+  ],
+  "HD Etherium (1000335)": [
+    [
+      {
+        "material": "Zeny",
+        "amount": 50000
+      },
+      {
+        "material": "Etel Dust (1000322)",
+        "amount": 3
+      },
+      {
+        "material": "HD Elunium (6241)",
+        "amount": 1
+      }
+    ]
+  ],
+  "HD Etherdeocon (1000336)": [
+    [
+      {
+        "material": "Zeny",
+        "amount": 50000
+      },
+      {
+        "material": "Etel Dust (1000322)",
+        "amount": 3
+      },
+      {
+        "material": "HD Oridecon (6240)",
+        "amount": 1
+      }
+    ]
+  ],
+  "HD Etel Bradium (1000369)": [
+    [
+      {
+        "material": "Zeny",
+        "amount": 50000
+      },
+      {
+        "material": "Etel Dust (1000322)",
+        "amount": 3
+      },
+      {
+        "material": "HD Bradium (6226)",
+        "amount": 1
+      }
+    ]
+  ],
+  "HD Etel Carnium (1000371)": [
+    [
+      {
+        "material": "Zeny",
+        "amount": 50000
+      },
+      {
+        "material": "Etel Dust (1000322)",
+        "amount": 3
+      },
+      {
+        "material": "HD Carnium (6225)",
+        "amount": 1
+      }
+    ]
+  ]
+}

@@ -1,0 +1,605 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MuhRO Refinement Calculator</title>
+
+    <meta name="description" content="MuhRO Refine Calculator helps Ragnarok Online players calculate expected material to get certain refinement level.">
+    <meta name="keywords" content="Ragnarok Online, MuhRO, refinement calculator, gaming tools">
+    <meta name="author" content="HolySoul88">  
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700&family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <link rel="icon" type="image/x-icon" href="/favicon.ico" />
+
+    <style>
+        :root {
+            --primary-bg: #1a1a2e;
+            --card-bg: #ffffff;
+            --muhro-blue: #0f3460;
+            --muhro-accent: #e94560;
+            --text-main: #333333;
+            --text-muted: #666666;
+            --border-color: #e1e1e1;
+        }
+
+        body { 
+            font-family: 'Nunito', sans-serif; 
+            background-color: var(--primary-bg); 
+            background-image: radial-gradient(circle at top, #16213e, #1a1a2e);
+            color: var(--text-main);
+            margin: 0;
+            padding: 40px 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+            box-sizing: border-box;
+        }
+
+        .app-container {
+            width: 100%;
+            max-width: 700px;
+        }
+
+        .calculator-card { 
+            background: var(--card-bg); 
+            padding: 30px; 
+            border-radius: 12px; 
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5); 
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid var(--border-color);
+        }
+
+        .header h1 {
+            font-family: 'Montserrat', sans-serif;
+            color: var(--muhro-blue);
+            margin: 0;
+            font-size: 1.6rem;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            font-weight: 700;
+        }
+
+        .header span {
+            color: var(--muhro-accent);
+            font-weight: 600;
+        }
+
+        .form-row {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+        
+        .form-group { flex: 1; margin-bottom: 20px; }
+        .form-row .form-group { margin-bottom: 0; }
+        
+        label { 
+            display: block; 
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 600; 
+            margin-bottom: 8px; 
+            color: var(--muhro-blue); 
+            font-size: 0.95rem;
+        }
+
+        select, input[type="number"] { 
+            width: 100%; 
+            padding: 10px 12px; 
+            border: 2px solid var(--border-color); 
+            border-radius: 6px; 
+            box-sizing: border-box; 
+            font-family: 'Nunito', sans-serif;
+            font-size: 1rem;
+            font-weight: 600;
+            transition: border-color 0.2s;
+        }
+
+        select:focus, input:focus {
+            outline: none;
+            border-color: var(--muhro-accent);
+        }
+
+        .checkbox-group {
+            display: flex;
+            align-items: center;
+            margin-bottom: 12px;
+            background: #f8f9fa;
+            padding: 10px;
+            border-radius: 6px;
+            border: 1px solid var(--border-color);
+        }
+
+        .checkbox-group input {
+            width: 18px;
+            height: 18px;
+            margin-right: 12px;
+            cursor: pointer;
+        }
+
+        .checkbox-group label {
+            margin-bottom: 0;
+            font-family: 'Nunito', sans-serif;
+            cursor: pointer;
+            color: var(--text-main);
+            font-size: 0.9rem;
+        }
+
+        .results-wrapper {
+            display: flex;
+            gap: 20px;
+            margin-top: 15px;
+        }
+
+        .results-col {
+            flex: 1;
+        }
+
+        .results-title {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 700;
+            color: var(--muhro-blue);
+            font-size: 0.9rem;
+            margin-bottom: 10px;
+            border-bottom: 2px solid var(--border-color);
+            padding-bottom: 5px;
+        }
+
+        .material-row { 
+            display: flex; 
+            justify-content: space-between; 
+            align-items: center; 
+            background: #f8f9fa; 
+            padding: 10px 12px; 
+            margin-bottom: 6px; 
+            border-radius: 6px; 
+            border: 1px solid var(--border-color);
+            font-size: 0.9rem;
+        }
+
+        .item-icon {
+            width: 24px;
+            height: 24px;
+            vertical-align: middle;
+            margin-right: 8px;
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            background-color: #f4f4f4;
+        }
+        
+        .material-name-container { 
+            display: flex;
+            align-items: center;
+            flex-grow: 1; 
+            font-weight: 600;
+            color: var(--text-main);
+            font-size: 0.9rem;
+        }
+
+        hr { border: 0; border-top: 2px dashed var(--border-color); margin: 25px 0; }
+
+        .footer {
+            text-align: center;
+            margin-top: 20px;
+            color: #a0a0b0;
+            font-size: 0.85rem;
+        }
+        
+        .footer .heart {
+            color: var(--muhro-accent);
+            font-size: 1.1rem;
+            vertical-align: middle;
+        }
+
+        .footer .author {
+            font-weight: 600;
+            color: #ffffff;
+            letter-spacing: 0.5px;
+        }
+
+        #logContainer {
+            background: #fdfdfd;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            padding: 12px;
+            max-height: 200px;
+            overflow-y: auto;
+            font-size: 0.85rem;
+            margin-top: 15px;
+            color: var(--text-muted);
+        }
+        
+        .log-entry { margin-bottom: 6px; padding-bottom: 6px; border-bottom: 1px solid #eee; }
+        .log-entry:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
+
+        .error-message {
+            color: var(--muhro-accent);
+            font-weight: 700;
+            text-align: center;
+            padding: 10px;
+            background: #ffe5e5;
+            border-radius: 6px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="app-container">
+    <div class="calculator-card">
+        
+        <div class="header">
+            <h1>MuhRO <span>Refine Calc</span></h1>
+        </div>
+        
+        <div class="form-row">
+            <div class="form-group">
+                <label>Gear Type</label>
+                <select id="gearType" class="calc-input">
+                    <option value="Weapon">Weapon</option>
+                    <option value="Armor">Armor</option>
+                    <option value="Shadow Weapon">Shadow Weapon</option>
+                    <option value="Shadow Armor">Shadow Armor</option>
+                </select>
+            </div>
+            <div class="form-group" id="levelGroup">
+                <label>Gear Level</label>
+                <select id="gearLevel" class="calc-input">
+                    <option value="1">Level 1</option>
+                    <option value="2">Level 2</option>
+                    <option value="3">Level 3</option>
+                    <option value="4">Level 4</option>
+                    <option value="5" selected>Level 5</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="form-row">
+            <div class="form-group">
+                <label>Current Refine</label>
+                <input type="number" id="currentRefine" class="calc-input" min="0" max="19" value="0">
+            </div>
+            <div class="form-group">
+                <label>Target Refine</label>
+                <input type="number" id="targetRefine" class="calc-input" min="1" max="20" value="10">
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label>Probability Rule</label>
+            <select id="probLogic" class="calc-input">
+                <option value="Normal">Normal Probability</option>
+                <option value="Special">Special (Enriched / Cash) Probability</option>
+            </select>
+        </div>
+
+        <div class="checkbox-group">
+            <input type="checkbox" id="useSafe" class="calc-input" checked>
+            <label for="useSafe">Prioritize "Safe" / HD Materials (Prevents destruction)</label>
+        </div>
+
+        <div class="checkbox-group">
+            <input type="checkbox" id="breakdownMats" class="calc-input">
+            <label for="breakdownMats">Show recursive raw materials breakdown (Etel Dust, Rough Oridecon, etc.)</label>
+        </div>
+
+        <div id="calculatorUI" style="display: none;">
+            <hr>
+            
+            <div class="results-wrapper">
+                <div class="results-col" id="directCol">
+                    <div class="results-title">Expected Materials Needed</div>
+                    <div id="directMaterialsContainer"></div>
+                </div>
+                
+                <div class="results-col" id="rawCol" style="display: none;">
+                    <div class="results-title">Recursive Raw Breakdown</div>
+                    <div id="rawMaterialsContainer"></div>
+                </div>
+            </div>
+            
+            <label style="margin-top: 25px;">Refine Path Expected Actions</label>
+            <div id="logContainer"></div>
+        </div>
+    </div>
+
+    <div class="footer">
+        Created with <span class="heart">&hearts;</span> by <span class="author">HolySoul88</span>
+    </div>
+</div>
+
+<script>
+    const probabilityData = [{"level": 1, "probability_logic": "Normal", "rates": {"Shadow Equipment": 1.0, "Armor (Lv 1)": 1.0, "Armor (Lv 2)": 1.0, "Weapon (Lv 1)": 1.0, "Weapon (Lv 2)": 1.0, "Weapon (Lv 3)": 1.0, "Weapon (Lv 4)": 1.0, "Weapon (Lv 5)": 1.0}}, {"level": 2, "probability_logic": "Normal", "rates": {"Shadow Equipment": 1.0, "Armor (Lv 1)": 1.0, "Armor (Lv 2)": 1.0, "Weapon (Lv 1)": 1.0, "Weapon (Lv 2)": 1.0, "Weapon (Lv 3)": 1.0, "Weapon (Lv 4)": 1.0, "Weapon (Lv 5)": 1.0}}, {"level": 3, "probability_logic": "Normal", "rates": {"Shadow Equipment": 1.0, "Armor (Lv 1)": 1.0, "Armor (Lv 2)": 1.0, "Weapon (Lv 1)": 1.0, "Weapon (Lv 2)": 1.0, "Weapon (Lv 3)": 1.0, "Weapon (Lv 4)": 1.0, "Weapon (Lv 5)": 1.0}}, {"level": 4, "probability_logic": "Normal", "rates": {"Shadow Equipment": 1.0, "Armor (Lv 1)": 1.0, "Armor (Lv 2)": 0.9, "Weapon (Lv 1)": 1.0, "Weapon (Lv 2)": 1.0, "Weapon (Lv 3)": 1.0, "Weapon (Lv 4)": 1.0, "Weapon (Lv 5)": 0.9}}, {"level": 5, "probability_logic": "Normal", "rates": {"Shadow Equipment": 0.7, "Armor (Lv 1)": 0.9, "Armor (Lv 2)": 0.7, "Weapon (Lv 1)": 1.0, "Weapon (Lv 2)": 1.0, "Weapon (Lv 3)": 1.0, "Weapon (Lv 4)": 0.9, "Weapon (Lv 5)": 0.7}}, {"level": 6, "probability_logic": "Normal", "rates": {"Shadow Equipment": 0.6, "Armor (Lv 1)": 0.7, "Armor (Lv 2)": 0.6, "Weapon (Lv 1)": 1.0, "Weapon (Lv 2)": 1.0, "Weapon (Lv 3)": 0.9, "Weapon (Lv 4)": 0.7, "Weapon (Lv 5)": 0.6}}, {"level": 7, "probability_logic": "Normal", "rates": {"Shadow Equipment": 0.6, "Armor (Lv 1)": 0.7, "Armor (Lv 2)": 0.6, "Weapon (Lv 1)": 1.0, "Weapon (Lv 2)": 0.9, "Weapon (Lv 3)": 0.8, "Weapon (Lv 4)": 0.7, "Weapon (Lv 5)": 0.6}}, {"level": 8, "probability_logic": "Normal", "rates": {"Shadow Equipment": 0.4, "Armor (Lv 1)": 0.4, "Armor (Lv 2)": 0.4, "Weapon (Lv 1)": 0.9, "Weapon (Lv 2)": 0.7, "Weapon (Lv 3)": 0.4, "Weapon (Lv 4)": 0.4, "Weapon (Lv 5)": 0.4}}, {"level": 9, "probability_logic": "Normal", "rates": {"Shadow Equipment": 0.4, "Armor (Lv 1)": 0.4, "Armor (Lv 2)": 0.4, "Weapon (Lv 1)": 0.7, "Weapon (Lv 2)": 0.4, "Weapon (Lv 3)": 0.4, "Weapon (Lv 4)": 0.4, "Weapon (Lv 5)": 0.4}}, {"level": 10, "probability_logic": "Normal", "rates": {"Shadow Equipment": 0.2, "Armor (Lv 1)": 0.2, "Armor (Lv 2)": 0.2, "Weapon (Lv 1)": 0.3, "Weapon (Lv 2)": 0.3, "Weapon (Lv 3)": 0.3, "Weapon (Lv 4)": 0.2, "Weapon (Lv 5)": 0.2}}, {"level": 11, "probability_logic": "Normal", "rates": {"Shadow Equipment": "-", "Armor (Lv 1)": 0.2, "Armor (Lv 2)": 0.16, "Weapon (Lv 1)": 0.4, "Weapon (Lv 2)": 0.4, "Weapon (Lv 3)": 0.4, "Weapon (Lv 4)": 0.2, "Weapon (Lv 5)": 0.16}}, {"level": 12, "probability_logic": "Normal", "rates": {"Shadow Equipment": "-", "Armor (Lv 1)": 0.2, "Armor (Lv 2)": 0.16, "Weapon (Lv 1)": 0.4, "Weapon (Lv 2)": 0.4, "Weapon (Lv 3)": 0.4, "Weapon (Lv 4)": 0.2, "Weapon (Lv 5)": 0.16}}, {"level": 13, "probability_logic": "Normal", "rates": {"Shadow Equipment": "-", "Armor (Lv 1)": 0.16, "Armor (Lv 2)": 0.16, "Weapon (Lv 1)": 0.35, "Weapon (Lv 2)": 0.35, "Weapon (Lv 3)": 0.35, "Weapon (Lv 4)": 0.16, "Weapon (Lv 5)": 0.16}}, {"level": 14, "probability_logic": "Normal", "rates": {"Shadow Equipment": "-", "Armor (Lv 1)": 0.16, "Armor (Lv 2)": 0.16, "Weapon (Lv 1)": 0.35, "Weapon (Lv 2)": 0.35, "Weapon (Lv 3)": 0.35, "Weapon (Lv 4)": 0.16, "Weapon (Lv 5)": 0.16}}, {"level": 15, "probability_logic": "Normal", "rates": {"Shadow Equipment": "-", "Armor (Lv 1)": 0.15, "Armor (Lv 2)": 0.14, "Weapon (Lv 1)": 0.3, "Weapon (Lv 2)": 0.3, "Weapon (Lv 3)": 0.3, "Weapon (Lv 4)": 0.15, "Weapon (Lv 5)": 0.14}}, {"level": 16, "probability_logic": "Normal", "rates": {"Shadow Equipment": "-", "Armor (Lv 1)": 0.15, "Armor (Lv 2)": 0.14, "Weapon (Lv 1)": 0.3, "Weapon (Lv 2)": 0.3, "Weapon (Lv 3)": 0.3, "Weapon (Lv 4)": 0.15, "Weapon (Lv 5)": 0.14}}, {"level": 17, "probability_logic": "Normal", "rates": {"Shadow Equipment": "-", "Armor (Lv 1)": 0.14, "Armor (Lv 2)": 0.14, "Weapon (Lv 1)": 0.2, "Weapon (Lv 2)": 0.2, "Weapon (Lv 3)": 0.2, "Weapon (Lv 4)": 0.14, "Weapon (Lv 5)": 0.14}}, {"level": 18, "probability_logic": "Normal", "rates": {"Shadow Equipment": "-", "Armor (Lv 1)": 0.14, "Armor (Lv 2)": 0.14, "Weapon (Lv 1)": 0.2, "Weapon (Lv 2)": 0.2, "Weapon (Lv 3)": 0.2, "Weapon (Lv 4)": 0.14, "Weapon (Lv 5)": 0.14}}, {"level": 19, "probability_logic": "Normal", "rates": {"Shadow Equipment": "-", "Armor (Lv 1)": 0.1, "Armor (Lv 2)": 0.1, "Weapon (Lv 1)": 0.15, "Weapon (Lv 2)": 0.15, "Weapon (Lv 3)": 0.15, "Weapon (Lv 4)": 0.1, "Weapon (Lv 5)": 0.1}}, {"level": 20, "probability_logic": "Normal", "rates": {"Shadow Equipment": "-", "Armor (Lv 1)": 0.1, "Armor (Lv 2)": 0.1, "Weapon (Lv 1)": 0.15, "Weapon (Lv 2)": 0.15, "Weapon (Lv 3)": 0.15, "Weapon (Lv 4)": 0.1, "Weapon (Lv 5)": 0.1}}, {"level": 1, "probability_logic": "Special", "rates": {"Shadow Equipment": 1.0, "Armor (Lv 1)": 1.0, "Armor (Lv 2)": 1.0, "Weapon (Lv 1)": 1.0, "Weapon (Lv 2)": 1.0, "Weapon (Lv 3)": 1.0, "Weapon (Lv 4)": 1.0, "Weapon (Lv 5)": 1.0}}, {"level": 2, "probability_logic": "Special", "rates": {"Shadow Equipment": 1.0, "Armor (Lv 1)": 1.0, "Armor (Lv 2)": 1.0, "Weapon (Lv 1)": 1.0, "Weapon (Lv 2)": 1.0, "Weapon (Lv 3)": 1.0, "Weapon (Lv 4)": 1.0, "Weapon (Lv 5)": 1.0}}, {"level": 3, "probability_logic": "Special", "rates": {"Shadow Equipment": 1.0, "Armor (Lv 1)": 1.0, "Armor (Lv 2)": 1.0, "Weapon (Lv 1)": 1.0, "Weapon (Lv 2)": 1.0, "Weapon (Lv 3)": 1.0, "Weapon (Lv 4)": 1.0, "Weapon (Lv 5)": 1.0}}, {"level": 4, "probability_logic": "Special", "rates": {"Shadow Equipment": 1.0, "Armor (Lv 1)": 1.0, "Armor (Lv 2)": 0.95, "Weapon (Lv 1)": 1.0, "Weapon (Lv 2)": 1.0, "Weapon (Lv 3)": 1.0, "Weapon (Lv 4)": 1.0, "Weapon (Lv 5)": 0.95}}, {"level": 5, "probability_logic": "Special", "rates": {"Shadow Equipment": 0.9, "Armor (Lv 1)": 0.95, "Armor (Lv 2)": 0.85, "Weapon (Lv 1)": 1.0, "Weapon (Lv 2)": 1.0, "Weapon (Lv 3)": 1.0, "Weapon (Lv 4)": 0.95, "Weapon (Lv 5)": 0.85}}, {"level": 6, "probability_logic": "Special", "rates": {"Shadow Equipment": 0.8, "Armor (Lv 1)": 0.8, "Armor (Lv 2)": 0.7, "Weapon (Lv 1)": 1.0, "Weapon (Lv 2)": 1.0, "Weapon (Lv 3)": 0.95, "Weapon (Lv 4)": 0.8, "Weapon (Lv 5)": 0.7}}, {"level": 7, "probability_logic": "Special", "rates": {"Shadow Equipment": 0.8, "Armor (Lv 1)": 0.8, "Armor (Lv 2)": 0.65, "Weapon (Lv 1)": 1.0, "Weapon (Lv 2)": 0.95, "Weapon (Lv 3)": 0.9, "Weapon (Lv 4)": 0.8, "Weapon (Lv 5)": 0.65}}, {"level": 8, "probability_logic": "Special", "rates": {"Shadow Equipment": 0.65, "Armor (Lv 1)": 0.6, "Armor (Lv 2)": 0.55, "Weapon (Lv 1)": 0.95, "Weapon (Lv 2)": 0.85, "Weapon (Lv 3)": 0.7, "Weapon (Lv 4)": 0.6, "Weapon (Lv 5)": 0.55}}, {"level": 9, "probability_logic": "Special", "rates": {"Shadow Equipment": 0.55, "Armor (Lv 1)": 0.5, "Armor (Lv 2)": 0.45, "Weapon (Lv 1)": 0.85, "Weapon (Lv 2)": 0.6, "Weapon (Lv 3)": 0.6, "Weapon (Lv 4)": 0.5, "Weapon (Lv 5)": 0.45}}, {"level": 10, "probability_logic": "Special", "rates": {"Shadow Equipment": 0.3, "Armor (Lv 1)": 0.35, "Armor (Lv 2)": 0.3, "Weapon (Lv 1)": 0.55, "Weapon (Lv 2)": 0.45, "Weapon (Lv 3)": 0.45, "Weapon (Lv 4)": 0.35, "Weapon (Lv 5)": 0.3}}, {"level": 11, "probability_logic": "Special", "rates": {"Shadow Equipment": "-", "Armor (Lv 1)": 0.2, "Armor (Lv 2)": 0.2, "Weapon (Lv 1)": 0.4, "Weapon (Lv 2)": 0.4, "Weapon (Lv 3)": 0.4, "Weapon (Lv 4)": 0.2, "Weapon (Lv 5)": 0.2}}, {"level": 12, "probability_logic": "Special", "rates": {"Shadow Equipment": "-", "Armor (Lv 1)": 0.2, "Armor (Lv 2)": 0.2, "Weapon (Lv 1)": 0.4, "Weapon (Lv 2)": 0.4, "Weapon (Lv 3)": 0.4, "Weapon (Lv 4)": 0.2, "Weapon (Lv 5)": 0.2}}, {"level": 13, "probability_logic": "Special", "rates": {"Shadow Equipment": "-", "Armor (Lv 1)": 0.16, "Armor (Lv 2)": 0.2, "Weapon (Lv 1)": 0.35, "Weapon (Lv 2)": 0.35, "Weapon (Lv 3)": 0.35, "Weapon (Lv 4)": 0.16, "Weapon (Lv 5)": 0.2}}, {"level": 14, "probability_logic": "Special", "rates": {"Shadow Equipment": "-", "Armor (Lv 1)": 0.16, "Armor (Lv 2)": 0.2, "Weapon (Lv 1)": 0.35, "Weapon (Lv 2)": 0.35, "Weapon (Lv 3)": 0.35, "Weapon (Lv 4)": 0.16, "Weapon (Lv 5)": 0.2}}, {"level": 15, "probability_logic": "Special", "rates": {"Shadow Equipment": "-", "Armor (Lv 1)": 0.15, "Armor (Lv 2)": 0.15, "Weapon (Lv 1)": 0.3, "Weapon (Lv 2)": 0.3, "Weapon (Lv 3)": 0.3, "Weapon (Lv 4)": 0.15, "Weapon (Lv 5)": 0.15}}, {"level": 16, "probability_logic": "Special", "rates": {"Shadow Equipment": "-", "Armor (Lv 1)": 0.15, "Armor (Lv 2)": 0.15, "Weapon (Lv 1)": 0.3, "Weapon (Lv 2)": 0.3, "Weapon (Lv 3)": 0.3, "Weapon (Lv 4)": 0.15, "Weapon (Lv 5)": 0.15}}, {"level": 17, "probability_logic": "Special", "rates": {"Shadow Equipment": "-", "Armor (Lv 1)": 0.14, "Armor (Lv 2)": 0.15, "Weapon (Lv 1)": 0.2, "Weapon (Lv 2)": 0.2, "Weapon (Lv 3)": 0.2, "Weapon (Lv 4)": 0.14, "Weapon (Lv 5)": 0.15}}, {"level": 18, "probability_logic": "Special", "rates": {"Shadow Equipment": "-", "Armor (Lv 1)": 0.14, "Armor (Lv 2)": 0.15, "Weapon (Lv 1)": 0.2, "Weapon (Lv 2)": 0.2, "Weapon (Lv 3)": 0.2, "Weapon (Lv 4)": 0.14, "Weapon (Lv 5)": 0.15}}, {"level": 19, "probability_logic": "Special", "rates": {"Shadow Equipment": "-", "Armor (Lv 1)": 0.1, "Armor (Lv 2)": 0.1, "Weapon (Lv 1)": 0.15, "Weapon (Lv 2)": 0.15, "Weapon (Lv 3)": 0.15, "Weapon (Lv 4)": 0.1, "Weapon (Lv 5)": 0.1}}, {"level": 20, "probability_logic": "Special", "rates": {"Shadow Equipment": "-", "Armor (Lv 1)": 0.1, "Armor (Lv 2)": 0.1, "Weapon (Lv 1)": 0.15, "Weapon (Lv 2)": 0.15, "Weapon (Lv 3)": 0.15, "Weapon (Lv 4)": 0.1, "Weapon (Lv 5)": 0.1}}];
+    const costsData = {"Phracon (1010)": [[{"material": "Zeny", "amount": 200}]], "Emveretarcon (1011)": [[{"material": "Zeny", "amount": 1000}]], "Oridecon (984)": [[{"material": "Rough Oridecon (756)", "amount": 5}]], "Elunium (985)": [[{"material": "Rough Elunium (757)", "amount": 5}]], "Bradium (6224)": [[{"material": "Zeny", "amount": 50000}, {"material": "Oridecon (984)", "amount": 3}]], "Carnium (6223)": [[{"material": "Zeny", "amount": 50000}, {"material": "Elunium (985)", "amount": 3}], [{"material": "Zeny", "amount": 50000}, {"material": "Refined Bradium (6090)", "amount": 1}]], "Etherium (1000331)": [[{"material": "Zeny", "amount": 10000}, {"material": "Etel Dust (1000322)", "amount": 1}, {"material": "Elunium (985)", "amount": 1}]], "Etherdeocon (1000332)": [[{"material": "Zeny", "amount": 10000}, {"material": "Etel Dust (1000322)", "amount": 1}, {"material": "Oridecon (984)", "amount": 1}]], "Etel Bradium (1000368)": [[{"material": "Zeny", "amount": 50000}, {"material": "Etel Dust (1000322)", "amount": 3}, {"material": "Bradium (6224)", "amount": 1}]], "Etel Carnium (1000370)": [[{"material": "Zeny", "amount": 50000}, {"material": "Etel Dust (1000322)", "amount": 3}, {"material": "Carnium (6223)", "amount": 1}]], "Enriched Etherium (1000333)": [[{"material": "Zeny", "amount": 20000}, {"material": "Etel Dust (1000322)", "amount": 2}, {"material": "Enriched Elunium (6291)", "amount": 1}]], "Enriched Etherdeocon (1000334)": [[{"material": "Zeny", "amount": 20000}, {"material": "Etel Dust (1000322)", "amount": 2}, {"material": "Enriched Oridecon (7620)", "amount": 1}]], "HD Etherium (1000335)": [[{"material": "Zeny", "amount": 50000}, {"material": "Etel Dust (1000322)", "amount": 3}, {"material": "HD Elunium (6241)", "amount": 1}]], "HD Etherdeocon (1000336)": [[{"material": "Zeny", "amount": 50000}, {"material": "Etel Dust (1000322)", "amount": 3}, {"material": "HD Oridecon (6240)", "amount": 1}]], "HD Etel Bradium (1000369)": [[{"material": "Zeny", "amount": 50000}, {"material": "Etel Dust (1000322)", "amount": 3}, {"material": "HD Bradium (6226)", "amount": 1}]], "HD Etel Carnium (1000371)": [[{"material": "Zeny", "amount": 50000}, {"material": "Etel Dust (1000322)", "amount": 3}, {"material": "HD Carnium (6225)", "amount": 1}]]};
+    const rulesData = [{"gear": "Weapon", "item": "Phracon (1010)", "probability": "Normal", "levels": [1], "is_shadow": false, "min_refine": 0, "max_refine": 10, "penalty": "Item Destroyed"}, {"gear": "Weapon", "item": "Emveretarcon (1011)", "probability": "Normal", "levels": [2], "is_shadow": false, "min_refine": 0, "max_refine": 10, "penalty": "Item Destroyed"}, {"gear": "Weapon", "item": "Oridecon (984)", "probability": "Normal", "levels": [3, 4], "is_shadow": true, "min_refine": 0, "max_refine": 10, "penalty": "Item Destroyed"}, {"gear": "Weapon", "item": "HD Oridecon (6240)", "probability": "Normal", "levels": [3, 4], "is_shadow": true, "min_refine": 7, "max_refine": 10, "penalty": "Refine Decreased by 1"}, {"gear": "Weapon", "item": "Etherdeocon (1000332)", "probability": "Normal", "levels": [5], "is_shadow": false, "min_refine": 0, "max_refine": 10, "penalty": "Refine Decreased by 3"}, {"gear": "Weapon", "item": "Bradium (6224)", "probability": "Normal", "levels": [1, 2, 3, 4], "is_shadow": false, "min_refine": 9, "max_refine": 20, "penalty": "Refine Decreased by 3-OR- Item Destroyed (Rare)"}, {"gear": "Weapon", "item": "HD Bradium (6226)", "probability": "Normal", "levels": [1, 2, 3, 4], "is_shadow": false, "min_refine": 9, "max_refine": 20, "penalty": "Refine Decreased by 1*"}, {"gear": "Weapon", "item": "Etel Bradium (1000368)", "probability": "Normal", "levels": [5], "is_shadow": false, "min_refine": 9, "max_refine": 20, "penalty": "Item Destroyed"}, {"gear": "Weapon", "item": "Enriched Oridecon (7620)", "probability": "Special", "levels": [3, 4], "is_shadow": true, "min_refine": 0, "max_refine": 10, "penalty": "Item Destroyed"}, {"gear": "Weapon", "item": "Enriched Etherdeocon (1000334)", "probability": "Special", "levels": [5], "is_shadow": false, "min_refine": 0, "max_refine": 10, "penalty": "Refine Decreased by 1"}, {"gear": "Weapon", "item": "HD Etherdeocon (1000336)", "probability": "Special", "levels": [5], "is_shadow": false, "min_refine": 9, "max_refine": 15, "penalty": "Item Destroyed"}, {"gear": "Weapon", "item": "HD Etel Bradium (1000369)", "probability": "Special", "levels": [5], "is_shadow": false, "min_refine": 14, "max_refine": 20, "penalty": "Item Destroyed"}, {"gear": "Armor", "item": "Elunium (985)", "probability": "Normal", "levels": [1], "is_shadow": true, "min_refine": 0, "max_refine": 10, "penalty": "Item Destroyed"}, {"gear": "Armor", "item": "HD Elunium (6241)", "probability": "Normal", "levels": [1], "is_shadow": true, "min_refine": 0, "max_refine": 10, "penalty": "Refine Decreased by 1"}, {"gear": "Armor", "item": "Etherium (1000331)", "probability": "Normal", "levels": [2], "is_shadow": false, "min_refine": 0, "max_refine": 10, "penalty": "Refine Decreased by 3"}, {"gear": "Armor", "item": "Carnium (6223)", "probability": "Normal", "levels": [1], "is_shadow": false, "min_refine": 9, "max_refine": 20, "penalty": "Refine Decreased by 3-OR- Item Destroyed (Rare)"}, {"gear": "Armor", "item": "HD Carnium (6225)", "probability": "Normal", "levels": [1], "is_shadow": false, "min_refine": 9, "max_refine": 20, "penalty": "Refine Decreased by 1*"}, {"gear": "Armor", "item": "Etel Carnium (1000370)", "probability": "Normal", "levels": [2], "is_shadow": false, "min_refine": 9, "max_refine": 20, "penalty": "Item Destroyed"}, {"gear": "Armor", "item": "Enriched Elunium (7619)", "probability": "Special", "levels": [1], "is_shadow": true, "min_refine": 0, "max_refine": 10, "penalty": "Item Destroyed"}, {"gear": "Armor", "item": "Enriched Etherium (1000333)", "probability": "Special", "levels": [2], "is_shadow": false, "min_refine": 0, "max_refine": 10, "penalty": "Refine Decreased by 1"}, {"gear": "Armor", "item": "HD Etherium (1000335)", "probability": "Special", "levels": [2], "is_shadow": false, "min_refine": 9, "max_refine": 15, "penalty": "Item Destroyed"}, {"gear": "Armor", "item": "HD Etel Carnium (1000371)", "probability": "Special", "levels": [2], "is_shadow": false, "min_refine": 14, "max_refine": 20, "penalty": "Item Destroyed"}];
+
+    function multiplyCost(costObj, multiplier) {
+        let res = {};
+        for(let k in costObj) res[k] = costObj[k] * multiplier;
+        return res;
+    }
+
+    function addCost(a, b) {
+        let res = {...a};
+        for(let k in b) res[k] = (res[k] || 0) + b[k];
+        return res;
+    }
+
+    function resolveBaseMaterials(itemName, amount = 1, breakdown = false) {
+        let res = {};
+        
+        let type = $('#gearType').val();
+        let level = parseInt($('#gearLevel').val()) || 1;
+        
+        let skipRoughs = false;
+        if ((type === 'Armor' && level === 2) || (type === 'Weapon' && level === 5)) {
+            if (itemName === "Oridecon (984)" || itemName === "Elunium (985)") {
+                skipRoughs = true;
+            }
+        }
+
+        if (breakdown && costsData[itemName] && !skipRoughs) {
+            let recipe = costsData[itemName][0]; 
+            for(let r of recipe) {
+                let sub = resolveBaseMaterials(r.material, r.amount * amount, breakdown);
+                res = addCost(res, sub);
+            }
+        } else {
+            res[itemName] = amount;
+        }
+        return res;
+    }
+
+    function formatItemName(rawName, withIcon = true) {
+        let match = rawName.match(/^(.*?)\s*\((\d+)\)$/);
+        
+        if (match) {
+            let itemName = match[1];
+            let itemId = match[2];
+            let matDbLink = `https://flux.muhro.eu/?module=item&action=view&id=${itemId}`;
+            
+            let iconHtml = '';
+            if (withIcon) {
+                let matIconUrl = `https://flux.muhro.eu/data/zrenderer_cache/item%2Ficon%2F${itemId}.png`;
+                iconHtml = `<img src="${matIconUrl}" class="item-icon" onerror="this.style.display='none'">`;
+            }
+            
+            return `
+                <div class="material-name-container">
+                    ${iconHtml}
+                    <a href="${matDbLink}" target="_blank" title="View in MuhRO Database" style="color: var(--muhro-blue); text-decoration: none; font-weight: 700; border-bottom: 1px dashed var(--muhro-blue); transition: opacity 0.2s;">
+                        ${itemName}
+                    </a>
+                </div>
+            `;
+        }
+        
+        return `<div class="material-name" style="font-weight: 700; color: var(--text-main);">${rawName}</div>`;
+    }
+
+    $(document).ready(function() {
+        $('#gearType').on('change', function() {
+            let type = $(this).val();
+            let $lvl = $('#gearLevel');
+            let $target = $('#targetRefine');
+            
+            if (type.includes('Shadow')) {
+                $('#levelGroup').slideUp();
+                
+                $target.attr('max', 10);
+                if (parseInt($target.val()) > 10) {
+                    $target.val(10);
+                }
+            } else {
+                $('#levelGroup').slideDown();
+                
+                $target.attr('max', 20);
+                
+                $lvl.empty();
+                if (type === 'Weapon') {
+                    [1,2,3,4,5].forEach(i => $lvl.append(`<option value="${i}">Level ${i}</option>`));
+                    $lvl.val("5");
+                } else if (type === 'Armor') {
+                    [1,2].forEach(i => $lvl.append(`<option value="${i}">Level ${i}</option>`));
+                    $lvl.val("2");
+                }
+            }
+            calculate();
+        });
+
+        $('.calc-input').on('change input', calculate);
+        calculate(); 
+    });
+
+    function calculate() {
+        let type = $('#gearType').val();
+        let level = parseInt($('#gearLevel').val()) || 1;
+        
+        let currentRefine = parseInt($('#currentRefine').val()) || 0;
+        let target = parseInt($('#targetRefine').val());
+        
+        let probLogic = $('#probLogic').val();
+        let useSafe = $('#useSafe').is(':checked');
+        let showBreakdown = $('#breakdownMats').is(':checked');
+
+        let isShadowUI = type.includes('Shadow');
+        let baseGearType = type.includes('Weapon') ? 'Weapon' : 'Armor';
+        let maxAllowed = isShadowUI ? 10 : 20;
+
+        $('#directMaterialsContainer').empty();
+        $('#rawMaterialsContainer').empty();
+        $('#logContainer').empty();
+        
+        if (showBreakdown) {
+            $('#rawCol').show();
+        } else {
+            $('#rawCol').hide();
+        }
+
+        if (isNaN(target) || target < 1) return;
+        if (target > maxAllowed) {
+            return renderError(`Target Refine for ${type} cannot exceed +${maxAllowed}.`);
+        }
+        if (currentRefine >= target) {
+            return renderError(`Target Refine (+${target}) must be higher than Current Refine (+${currentRefine}).`);
+        }
+
+        let step_costs_dir = []; 
+        let step_costs_raw = []; 
+        
+        let total_dir = {}; 
+        let total_raw = {}; 
+        let log = [];
+
+        for (let L = 0; L < target; L++) {
+            let validRules = rulesData.filter(r => {
+                if (r.gear !== baseGearType || r.probability !== probLogic) return false;
+                if (L >= r.min_refine && L < r.max_refine) {
+                    if (isShadowUI) return r.is_shadow === true;
+                    else return r.levels.includes(level);
+                }
+                return false;
+            });
+
+            if (validRules.length === 0) {
+                return renderError(`No valid material rule found for configuring ${type} Level ${level} from +${L} to +${L+1} under ${probLogic} logic.`);
+            }
+
+            if (useSafe) {
+                validRules.sort((a, b) => {
+                    let aDest = a.penalty.includes("Destroyed") ? 1 : 0;
+                    let bDest = b.penalty.includes("Destroyed") ? 1 : 0;
+                    return aDest - bDest;
+                });
+            }
+            let rule = validRules[0];
+
+            let probRow = probabilityData.find(p => p.level === (L + 1) && p.probability_logic === probLogic);
+            if (!probRow) return renderError(`System Error: Missing Probability logic for +${L+1}.`);
+            
+            let probKey = isShadowUI ? "Shadow Equipment" : `${baseGearType} (Lv ${level})`;
+            let pRate = probRow.rates[probKey];
+
+            if (pRate === "-" || pRate === undefined || pRate <= 0) {
+                return renderError(`Refining ${probKey} past +${L} is not possible according to official rates.`);
+            }
+
+            let fails_avg = (1 - pRate) / pRate;
+            
+            let matCostDir = resolveBaseMaterials(rule.item, 1, false);
+            let step_cost_dir = {};
+            if (rule.penalty.includes("Destroyed")) {
+                let fail_dir = addCost(matCostDir, {"Base Gear Spare": 1});
+                for(let i=0; i<L; i++) fail_dir = addCost(fail_dir, step_costs_dir[i]);
+                step_cost_dir = addCost(matCostDir, multiplyCost(fail_dir, fails_avg));
+            } else if (rule.penalty.includes("Decreased by 1")) {
+                let fail_dir = addCost(matCostDir, step_costs_dir[L - 1] || {});
+                step_cost_dir = addCost(matCostDir, multiplyCost(fail_dir, fails_avg));
+            } else if (rule.penalty.includes("Decreased by 3")) {
+                let rec = {}; for (let i = Math.max(0, L - 3); i < L; i++) rec = addCost(rec, step_costs_dir[i]);
+                let fail_dir = addCost(matCostDir, rec);
+                step_cost_dir = addCost(matCostDir, multiplyCost(fail_dir, fails_avg));
+            } else {
+                step_cost_dir = addCost(matCostDir, multiplyCost(matCostDir, fails_avg));
+            }
+            step_costs_dir[L] = step_cost_dir;
+
+            let matCostRaw = resolveBaseMaterials(rule.item, 1, true);
+            let step_cost_raw = {};
+            if (rule.penalty.includes("Destroyed")) {
+                let fail_raw = addCost(matCostRaw, {"Base Gear Spare": 1});
+                for(let i=0; i<L; i++) fail_raw = addCost(fail_raw, step_costs_raw[i]);
+                step_cost_raw = addCost(matCostRaw, multiplyCost(fail_raw, fails_avg));
+            } else if (rule.penalty.includes("Decreased by 1")) {
+                let fail_raw = addCost(matCostRaw, step_costs_raw[L - 1] || {});
+                step_cost_raw = addCost(matCostRaw, multiplyCost(fail_raw, fails_avg));
+            } else if (rule.penalty.includes("Decreased by 3")) {
+                let rec = {}; for (let i = Math.max(0, L - 3); i < L; i++) rec = addCost(rec, step_costs_raw[i]);
+                let fail_raw = addCost(matCostRaw, rec);
+                step_cost_raw = addCost(matCostRaw, multiplyCost(fail_raw, fails_avg));
+            } else {
+                step_cost_raw = addCost(matCostRaw, multiplyCost(matCostRaw, fails_avg));
+            }
+            step_costs_raw[L] = step_cost_raw;
+            
+            if (L >= currentRefine) {
+                total_dir = addCost(total_dir, step_cost_dir);
+                total_raw = addCost(total_raw, step_cost_raw);
+                
+                let logFormattedItem = formatItemName(rule.item, false);
+                log.push(`<div class="log-entry" style="display:flex; flex-direction:column; gap:4px;">
+                            <div><strong>+${L} &rarr; +${L+1}</strong> : Used ${logFormattedItem} (Success: ${(pRate * 100).toFixed(1)}%)</div>
+                            <small>Penalty on Fail: <em>${rule.penalty}</em></small>
+                          </div>`);
+            }
+        }
+
+        renderLists(total_dir, total_raw);
+        
+        $('#logContainer').html(`
+            <div style="margin-bottom: 10px; font-weight: bold; color: var(--muhro-blue);">
+                Calculating journey from +${currentRefine} to +${target}:
+            </div>
+            ${log.join('')}
+        `);
+        $('#calculatorUI').fadeIn();
+    }
+
+    function renderError(msg) {
+        $('#directMaterialsContainer').html(`<div class="error-message">${msg}</div>`);
+        $('#rawMaterialsContainer').empty();
+        $('#rawCol').hide();
+        $('#logContainer').empty();
+        $('#calculatorUI').fadeIn();
+    }
+
+    function buildHTMLList(dataObj) {
+        let keys = Object.keys(dataObj).sort((a,b) => {
+            if (a.includes('Base Gear')) return -1;
+            if (b.includes('Base Gear')) return 1;
+            if (a === 'Zeny') return -1;
+            if (b === 'Zeny') return 1;
+            return a.localeCompare(b);
+        });
+        
+        let html = '';
+        let hasData = false;
+        
+        keys.forEach(k => {
+            let val = dataObj[k];
+            if (val <= 0) return; 
+            
+            hasData = true;
+            if (k === 'Zeny') {
+                val = Math.round(val).toLocaleString() + ' z';
+            } else {
+                val = Math.ceil(val).toLocaleString();
+            }
+            
+            let displayItem = formatItemName(k, true);
+            
+            html += `
+                <div class="material-row">
+                    ${displayItem}
+                    <div style="font-weight: bold; color: var(--muhro-accent); margin-left: 10px;">${val}</div>
+                </div>
+            `;
+        });
+        
+        if(!hasData) html = "<div style='padding: 10px;'>No materials needed.</div>";
+        return html;
+    }
+
+    function renderLists(total_dir, total_raw) {
+        $('#directMaterialsContainer').html(buildHTMLList(total_dir));
+        $('#rawMaterialsContainer').html(buildHTMLList(total_raw));
+    }
+</script>
+
+</body>
+</html>

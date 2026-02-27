@@ -1,0 +1,562 @@
+[
+  {
+    "level": 1,
+    "probability_logic": "Normal",
+    "rates": {
+      "Shadow Equipment": 1.0,
+      "Armor (Lv 1)": 1.0,
+      "Armor (Lv 2)": 1.0,
+      "Weapon (Lv 1)": 1.0,
+      "Weapon (Lv 2)": 1.0,
+      "Weapon (Lv 3)": 1.0,
+      "Weapon (Lv 4)": 1.0,
+      "Weapon (Lv 5)": 1.0
+    }
+  },
+  {
+    "level": 2,
+    "probability_logic": "Normal",
+    "rates": {
+      "Shadow Equipment": 1.0,
+      "Armor (Lv 1)": 1.0,
+      "Armor (Lv 2)": 1.0,
+      "Weapon (Lv 1)": 1.0,
+      "Weapon (Lv 2)": 1.0,
+      "Weapon (Lv 3)": 1.0,
+      "Weapon (Lv 4)": 1.0,
+      "Weapon (Lv 5)": 1.0
+    }
+  },
+  {
+    "level": 3,
+    "probability_logic": "Normal",
+    "rates": {
+      "Shadow Equipment": 1.0,
+      "Armor (Lv 1)": 1.0,
+      "Armor (Lv 2)": 1.0,
+      "Weapon (Lv 1)": 1.0,
+      "Weapon (Lv 2)": 1.0,
+      "Weapon (Lv 3)": 1.0,
+      "Weapon (Lv 4)": 1.0,
+      "Weapon (Lv 5)": 1.0
+    }
+  },
+  {
+    "level": 4,
+    "probability_logic": "Normal",
+    "rates": {
+      "Shadow Equipment": 1.0,
+      "Armor (Lv 1)": 1.0,
+      "Armor (Lv 2)": 0.9,
+      "Weapon (Lv 1)": 1.0,
+      "Weapon (Lv 2)": 1.0,
+      "Weapon (Lv 3)": 1.0,
+      "Weapon (Lv 4)": 1.0,
+      "Weapon (Lv 5)": 0.9
+    }
+  },
+  {
+    "level": 5,
+    "probability_logic": "Normal",
+    "rates": {
+      "Shadow Equipment": 0.7,
+      "Armor (Lv 1)": 0.9,
+      "Armor (Lv 2)": 0.7,
+      "Weapon (Lv 1)": 1.0,
+      "Weapon (Lv 2)": 1.0,
+      "Weapon (Lv 3)": 1.0,
+      "Weapon (Lv 4)": 0.9,
+      "Weapon (Lv 5)": 0.7
+    }
+  },
+  {
+    "level": 6,
+    "probability_logic": "Normal",
+    "rates": {
+      "Shadow Equipment": 0.6,
+      "Armor (Lv 1)": 0.7,
+      "Armor (Lv 2)": 0.6,
+      "Weapon (Lv 1)": 1.0,
+      "Weapon (Lv 2)": 1.0,
+      "Weapon (Lv 3)": 0.9,
+      "Weapon (Lv 4)": 0.7,
+      "Weapon (Lv 5)": 0.6
+    }
+  },
+  {
+    "level": 7,
+    "probability_logic": "Normal",
+    "rates": {
+      "Shadow Equipment": 0.6,
+      "Armor (Lv 1)": 0.7,
+      "Armor (Lv 2)": 0.6,
+      "Weapon (Lv 1)": 1.0,
+      "Weapon (Lv 2)": 0.9,
+      "Weapon (Lv 3)": 0.8,
+      "Weapon (Lv 4)": 0.7,
+      "Weapon (Lv 5)": 0.6
+    }
+  },
+  {
+    "level": 8,
+    "probability_logic": "Normal",
+    "rates": {
+      "Shadow Equipment": 0.4,
+      "Armor (Lv 1)": 0.4,
+      "Armor (Lv 2)": 0.4,
+      "Weapon (Lv 1)": 0.9,
+      "Weapon (Lv 2)": 0.7,
+      "Weapon (Lv 3)": 0.4,
+      "Weapon (Lv 4)": 0.4,
+      "Weapon (Lv 5)": 0.4
+    }
+  },
+  {
+    "level": 9,
+    "probability_logic": "Normal",
+    "rates": {
+      "Shadow Equipment": 0.4,
+      "Armor (Lv 1)": 0.4,
+      "Armor (Lv 2)": 0.4,
+      "Weapon (Lv 1)": 0.7,
+      "Weapon (Lv 2)": 0.4,
+      "Weapon (Lv 3)": 0.4,
+      "Weapon (Lv 4)": 0.4,
+      "Weapon (Lv 5)": 0.4
+    }
+  },
+  {
+    "level": 10,
+    "probability_logic": "Normal",
+    "rates": {
+      "Shadow Equipment": 0.2,
+      "Armor (Lv 1)": 0.2,
+      "Armor (Lv 2)": 0.2,
+      "Weapon (Lv 1)": 0.3,
+      "Weapon (Lv 2)": 0.3,
+      "Weapon (Lv 3)": 0.3,
+      "Weapon (Lv 4)": 0.2,
+      "Weapon (Lv 5)": 0.2
+    }
+  },
+  {
+    "level": 11,
+    "probability_logic": "Normal",
+    "rates": {
+      "Shadow Equipment": "-",
+      "Armor (Lv 1)": 0.2,
+      "Armor (Lv 2)": 0.16,
+      "Weapon (Lv 1)": 0.4,
+      "Weapon (Lv 2)": 0.4,
+      "Weapon (Lv 3)": 0.4,
+      "Weapon (Lv 4)": 0.2,
+      "Weapon (Lv 5)": 0.16
+    }
+  },
+  {
+    "level": 12,
+    "probability_logic": "Normal",
+    "rates": {
+      "Shadow Equipment": "-",
+      "Armor (Lv 1)": 0.2,
+      "Armor (Lv 2)": 0.16,
+      "Weapon (Lv 1)": 0.4,
+      "Weapon (Lv 2)": 0.4,
+      "Weapon (Lv 3)": 0.4,
+      "Weapon (Lv 4)": 0.2,
+      "Weapon (Lv 5)": 0.16
+    }
+  },
+  {
+    "level": 13,
+    "probability_logic": "Normal",
+    "rates": {
+      "Shadow Equipment": "-",
+      "Armor (Lv 1)": 0.16,
+      "Armor (Lv 2)": 0.16,
+      "Weapon (Lv 1)": 0.35,
+      "Weapon (Lv 2)": 0.35,
+      "Weapon (Lv 3)": 0.35,
+      "Weapon (Lv 4)": 0.16,
+      "Weapon (Lv 5)": 0.16
+    }
+  },
+  {
+    "level": 14,
+    "probability_logic": "Normal",
+    "rates": {
+      "Shadow Equipment": "-",
+      "Armor (Lv 1)": 0.16,
+      "Armor (Lv 2)": 0.16,
+      "Weapon (Lv 1)": 0.35,
+      "Weapon (Lv 2)": 0.35,
+      "Weapon (Lv 3)": 0.35,
+      "Weapon (Lv 4)": 0.16,
+      "Weapon (Lv 5)": 0.16
+    }
+  },
+  {
+    "level": 15,
+    "probability_logic": "Normal",
+    "rates": {
+      "Shadow Equipment": "-",
+      "Armor (Lv 1)": 0.15,
+      "Armor (Lv 2)": 0.14,
+      "Weapon (Lv 1)": 0.3,
+      "Weapon (Lv 2)": 0.3,
+      "Weapon (Lv 3)": 0.3,
+      "Weapon (Lv 4)": 0.15,
+      "Weapon (Lv 5)": 0.14
+    }
+  },
+  {
+    "level": 16,
+    "probability_logic": "Normal",
+    "rates": {
+      "Shadow Equipment": "-",
+      "Armor (Lv 1)": 0.15,
+      "Armor (Lv 2)": 0.14,
+      "Weapon (Lv 1)": 0.3,
+      "Weapon (Lv 2)": 0.3,
+      "Weapon (Lv 3)": 0.3,
+      "Weapon (Lv 4)": 0.15,
+      "Weapon (Lv 5)": 0.14
+    }
+  },
+  {
+    "level": 17,
+    "probability_logic": "Normal",
+    "rates": {
+      "Shadow Equipment": "-",
+      "Armor (Lv 1)": 0.14,
+      "Armor (Lv 2)": 0.14,
+      "Weapon (Lv 1)": 0.2,
+      "Weapon (Lv 2)": 0.2,
+      "Weapon (Lv 3)": 0.2,
+      "Weapon (Lv 4)": 0.14,
+      "Weapon (Lv 5)": 0.14
+    }
+  },
+  {
+    "level": 18,
+    "probability_logic": "Normal",
+    "rates": {
+      "Shadow Equipment": "-",
+      "Armor (Lv 1)": 0.14,
+      "Armor (Lv 2)": 0.14,
+      "Weapon (Lv 1)": 0.2,
+      "Weapon (Lv 2)": 0.2,
+      "Weapon (Lv 3)": 0.2,
+      "Weapon (Lv 4)": 0.14,
+      "Weapon (Lv 5)": 0.14
+    }
+  },
+  {
+    "level": 19,
+    "probability_logic": "Normal",
+    "rates": {
+      "Shadow Equipment": "-",
+      "Armor (Lv 1)": 0.1,
+      "Armor (Lv 2)": 0.1,
+      "Weapon (Lv 1)": 0.15,
+      "Weapon (Lv 2)": 0.15,
+      "Weapon (Lv 3)": 0.15,
+      "Weapon (Lv 4)": 0.1,
+      "Weapon (Lv 5)": 0.1
+    }
+  },
+  {
+    "level": 20,
+    "probability_logic": "Normal",
+    "rates": {
+      "Shadow Equipment": "-",
+      "Armor (Lv 1)": 0.1,
+      "Armor (Lv 2)": 0.1,
+      "Weapon (Lv 1)": 0.15,
+      "Weapon (Lv 2)": 0.15,
+      "Weapon (Lv 3)": 0.15,
+      "Weapon (Lv 4)": 0.1,
+      "Weapon (Lv 5)": 0.1
+    }
+  },
+  {
+    "level": 1,
+    "probability_logic": "Special",
+    "rates": {
+      "Shadow Equipment": 1.0,
+      "Armor (Lv 1)": 1.0,
+      "Armor (Lv 2)": 1.0,
+      "Weapon (Lv 1)": 1.0,
+      "Weapon (Lv 2)": 1.0,
+      "Weapon (Lv 3)": 1.0,
+      "Weapon (Lv 4)": 1.0,
+      "Weapon (Lv 5)": 1.0
+    }
+  },
+  {
+    "level": 2,
+    "probability_logic": "Special",
+    "rates": {
+      "Shadow Equipment": 1.0,
+      "Armor (Lv 1)": 1.0,
+      "Armor (Lv 2)": 1.0,
+      "Weapon (Lv 1)": 1.0,
+      "Weapon (Lv 2)": 1.0,
+      "Weapon (Lv 3)": 1.0,
+      "Weapon (Lv 4)": 1.0,
+      "Weapon (Lv 5)": 1.0
+    }
+  },
+  {
+    "level": 3,
+    "probability_logic": "Special",
+    "rates": {
+      "Shadow Equipment": 1.0,
+      "Armor (Lv 1)": 1.0,
+      "Armor (Lv 2)": 1.0,
+      "Weapon (Lv 1)": 1.0,
+      "Weapon (Lv 2)": 1.0,
+      "Weapon (Lv 3)": 1.0,
+      "Weapon (Lv 4)": 1.0,
+      "Weapon (Lv 5)": 1.0
+    }
+  },
+  {
+    "level": 4,
+    "probability_logic": "Special",
+    "rates": {
+      "Shadow Equipment": 1.0,
+      "Armor (Lv 1)": 1.0,
+      "Armor (Lv 2)": 0.95,
+      "Weapon (Lv 1)": 1.0,
+      "Weapon (Lv 2)": 1.0,
+      "Weapon (Lv 3)": 1.0,
+      "Weapon (Lv 4)": 1.0,
+      "Weapon (Lv 5)": 0.95
+    }
+  },
+  {
+    "level": 5,
+    "probability_logic": "Special",
+    "rates": {
+      "Shadow Equipment": 0.9,
+      "Armor (Lv 1)": 0.95,
+      "Armor (Lv 2)": 0.85,
+      "Weapon (Lv 1)": 1.0,
+      "Weapon (Lv 2)": 1.0,
+      "Weapon (Lv 3)": 1.0,
+      "Weapon (Lv 4)": 0.95,
+      "Weapon (Lv 5)": 0.85
+    }
+  },
+  {
+    "level": 6,
+    "probability_logic": "Special",
+    "rates": {
+      "Shadow Equipment": 0.8,
+      "Armor (Lv 1)": 0.8,
+      "Armor (Lv 2)": 0.7,
+      "Weapon (Lv 1)": 1.0,
+      "Weapon (Lv 2)": 1.0,
+      "Weapon (Lv 3)": 0.95,
+      "Weapon (Lv 4)": 0.8,
+      "Weapon (Lv 5)": 0.7
+    }
+  },
+  {
+    "level": 7,
+    "probability_logic": "Special",
+    "rates": {
+      "Shadow Equipment": 0.8,
+      "Armor (Lv 1)": 0.8,
+      "Armor (Lv 2)": 0.65,
+      "Weapon (Lv 1)": 1.0,
+      "Weapon (Lv 2)": 0.95,
+      "Weapon (Lv 3)": 0.9,
+      "Weapon (Lv 4)": 0.8,
+      "Weapon (Lv 5)": 0.65
+    }
+  },
+  {
+    "level": 8,
+    "probability_logic": "Special",
+    "rates": {
+      "Shadow Equipment": 0.65,
+      "Armor (Lv 1)": 0.6,
+      "Armor (Lv 2)": 0.55,
+      "Weapon (Lv 1)": 0.95,
+      "Weapon (Lv 2)": 0.85,
+      "Weapon (Lv 3)": 0.7,
+      "Weapon (Lv 4)": 0.6,
+      "Weapon (Lv 5)": 0.55
+    }
+  },
+  {
+    "level": 9,
+    "probability_logic": "Special",
+    "rates": {
+      "Shadow Equipment": 0.55,
+      "Armor (Lv 1)": 0.5,
+      "Armor (Lv 2)": 0.45,
+      "Weapon (Lv 1)": 0.85,
+      "Weapon (Lv 2)": 0.6,
+      "Weapon (Lv 3)": 0.6,
+      "Weapon (Lv 4)": 0.5,
+      "Weapon (Lv 5)": 0.45
+    }
+  },
+  {
+    "level": 10,
+    "probability_logic": "Special",
+    "rates": {
+      "Shadow Equipment": 0.3,
+      "Armor (Lv 1)": 0.35,
+      "Armor (Lv 2)": 0.3,
+      "Weapon (Lv 1)": 0.55,
+      "Weapon (Lv 2)": 0.45,
+      "Weapon (Lv 3)": 0.45,
+      "Weapon (Lv 4)": 0.35,
+      "Weapon (Lv 5)": 0.3
+    }
+  },
+  {
+    "level": 11,
+    "probability_logic": "Special",
+    "rates": {
+      "Shadow Equipment": "-",
+      "Armor (Lv 1)": 0.2,
+      "Armor (Lv 2)": 0.2,
+      "Weapon (Lv 1)": 0.4,
+      "Weapon (Lv 2)": 0.4,
+      "Weapon (Lv 3)": 0.4,
+      "Weapon (Lv 4)": 0.2,
+      "Weapon (Lv 5)": 0.2
+    }
+  },
+  {
+    "level": 12,
+    "probability_logic": "Special",
+    "rates": {
+      "Shadow Equipment": "-",
+      "Armor (Lv 1)": 0.2,
+      "Armor (Lv 2)": 0.2,
+      "Weapon (Lv 1)": 0.4,
+      "Weapon (Lv 2)": 0.4,
+      "Weapon (Lv 3)": 0.4,
+      "Weapon (Lv 4)": 0.2,
+      "Weapon (Lv 5)": 0.2
+    }
+  },
+  {
+    "level": 13,
+    "probability_logic": "Special",
+    "rates": {
+      "Shadow Equipment": "-",
+      "Armor (Lv 1)": 0.16,
+      "Armor (Lv 2)": 0.2,
+      "Weapon (Lv 1)": 0.35,
+      "Weapon (Lv 2)": 0.35,
+      "Weapon (Lv 3)": 0.35,
+      "Weapon (Lv 4)": 0.16,
+      "Weapon (Lv 5)": 0.2
+    }
+  },
+  {
+    "level": 14,
+    "probability_logic": "Special",
+    "rates": {
+      "Shadow Equipment": "-",
+      "Armor (Lv 1)": 0.16,
+      "Armor (Lv 2)": 0.2,
+      "Weapon (Lv 1)": 0.35,
+      "Weapon (Lv 2)": 0.35,
+      "Weapon (Lv 3)": 0.35,
+      "Weapon (Lv 4)": 0.16,
+      "Weapon (Lv 5)": 0.2
+    }
+  },
+  {
+    "level": 15,
+    "probability_logic": "Special",
+    "rates": {
+      "Shadow Equipment": "-",
+      "Armor (Lv 1)": 0.15,
+      "Armor (Lv 2)": 0.15,
+      "Weapon (Lv 1)": 0.3,
+      "Weapon (Lv 2)": 0.3,
+      "Weapon (Lv 3)": 0.3,
+      "Weapon (Lv 4)": 0.15,
+      "Weapon (Lv 5)": 0.15
+    }
+  },
+  {
+    "level": 16,
+    "probability_logic": "Special",
+    "rates": {
+      "Shadow Equipment": "-",
+      "Armor (Lv 1)": 0.15,
+      "Armor (Lv 2)": 0.15,
+      "Weapon (Lv 1)": 0.3,
+      "Weapon (Lv 2)": 0.3,
+      "Weapon (Lv 3)": 0.3,
+      "Weapon (Lv 4)": 0.15,
+      "Weapon (Lv 5)": 0.15
+    }
+  },
+  {
+    "level": 17,
+    "probability_logic": "Special",
+    "rates": {
+      "Shadow Equipment": "-",
+      "Armor (Lv 1)": 0.14,
+      "Armor (Lv 2)": 0.15,
+      "Weapon (Lv 1)": 0.2,
+      "Weapon (Lv 2)": 0.2,
+      "Weapon (Lv 3)": 0.2,
+      "Weapon (Lv 4)": 0.14,
+      "Weapon (Lv 5)": 0.15
+    }
+  },
+  {
+    "level": 18,
+    "probability_logic": "Special",
+    "rates": {
+      "Shadow Equipment": "-",
+      "Armor (Lv 1)": 0.14,
+      "Armor (Lv 2)": 0.15,
+      "Weapon (Lv 1)": 0.2,
+      "Weapon (Lv 2)": 0.2,
+      "Weapon (Lv 3)": 0.2,
+      "Weapon (Lv 4)": 0.14,
+      "Weapon (Lv 5)": 0.15
+    }
+  },
+  {
+    "level": 19,
+    "probability_logic": "Special",
+    "rates": {
+      "Shadow Equipment": "-",
+      "Armor (Lv 1)": 0.1,
+      "Armor (Lv 2)": 0.1,
+      "Weapon (Lv 1)": 0.15,
+      "Weapon (Lv 2)": 0.15,
+      "Weapon (Lv 3)": 0.15,
+      "Weapon (Lv 4)": 0.1,
+      "Weapon (Lv 5)": 0.1
+    }
+  },
+  {
+    "level": 20,
+    "probability_logic": "Special",
+    "rates": {
+      "Shadow Equipment": "-",
+      "Armor (Lv 1)": 0.1,
+      "Armor (Lv 2)": 0.1,
+      "Weapon (Lv 1)": 0.15,
+      "Weapon (Lv 2)": 0.15,
+      "Weapon (Lv 3)": 0.15,
+      "Weapon (Lv 4)": 0.1,
+      "Weapon (Lv 5)": 0.1
+    }
+  }
+]

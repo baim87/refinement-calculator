@@ -1,0 +1,275 @@
+[
+  {
+    "gear": "Weapon",
+    "item": "Phracon (1010)",
+    "probability": "Normal",
+    "levels": [
+      1
+    ],
+    "is_shadow": false,
+    "min_refine": 0,
+    "max_refine": 10,
+    "penalty": "Item Destroyed"
+  },
+  {
+    "gear": "Weapon",
+    "item": "Emveretarcon (1011)",
+    "probability": "Normal",
+    "levels": [
+      2
+    ],
+    "is_shadow": false,
+    "min_refine": 0,
+    "max_refine": 10,
+    "penalty": "Item Destroyed"
+  },
+  {
+    "gear": "Weapon",
+    "item": "Oridecon (984)",
+    "probability": "Normal",
+    "levels": [
+      3,
+      4
+    ],
+    "is_shadow": true,
+    "min_refine": 0,
+    "max_refine": 10,
+    "penalty": "Item Destroyed"
+  },
+  {
+    "gear": "Weapon",
+    "item": "HD Oridecon (6240)",
+    "probability": "Normal",
+    "levels": [
+      3,
+      4
+    ],
+    "is_shadow": true,
+    "min_refine": 7,
+    "max_refine": 10,
+    "penalty": "Refine Decreased by 1"
+  },
+  {
+    "gear": "Weapon",
+    "item": "Etherdeocon (1000332)",
+    "probability": "Normal",
+    "levels": [
+      5
+    ],
+    "is_shadow": false,
+    "min_refine": 0,
+    "max_refine": 10,
+    "penalty": "Refine Decreased by 3"
+  },
+  {
+    "gear": "Weapon",
+    "item": "Bradium (6224)",
+    "probability": "Normal",
+    "levels": [
+      1,
+      2,
+      3,
+      4
+    ],
+    "is_shadow": false,
+    "min_refine": 9,
+    "max_refine": 20,
+    "penalty": "Refine Decreased by 3-OR- Item Destroyed (Rare)"
+  },
+  {
+    "gear": "Weapon",
+    "item": "HD Bradium (6226)",
+    "probability": "Normal",
+    "levels": [
+      1,
+      2,
+      3,
+      4
+    ],
+    "is_shadow": false,
+    "min_refine": 9,
+    "max_refine": 20,
+    "penalty": "Refine Decreased by 1*"
+  },
+  {
+    "gear": "Weapon",
+    "item": "Etel Bradium (1000368)",
+    "probability": "Normal",
+    "levels": [
+      5
+    ],
+    "is_shadow": false,
+    "min_refine": 9,
+    "max_refine": 20,
+    "penalty": "Item Destroyed"
+  },
+  {
+    "gear": "Weapon",
+    "item": "Enriched Oridecon (7620)",
+    "probability": "Special",
+    "levels": [
+      3,
+      4
+    ],
+    "is_shadow": true,
+    "min_refine": 0,
+    "max_refine": 10,
+    "penalty": "Item Destroyed"
+  },
+  {
+    "gear": "Weapon",
+    "item": "Enriched Etherdeocon (1000334)",
+    "probability": "Special",
+    "levels": [
+      5
+    ],
+    "is_shadow": false,
+    "min_refine": 0,
+    "max_refine": 10,
+    "penalty": "Refine Decreased by 1"
+  },
+  {
+    "gear": "Weapon",
+    "item": "HD Etherdeocon (1000336)",
+    "probability": "Special",
+    "levels": [
+      5
+    ],
+    "is_shadow": false,
+    "min_refine": 9,
+    "max_refine": 15,
+    "penalty": "Item Destroyed"
+  },
+  {
+    "gear": "Weapon",
+    "item": "HD Etel Bradium (1000369)",
+    "probability": "Special",
+    "levels": [
+      5
+    ],
+    "is_shadow": false,
+    "min_refine": 14,
+    "max_refine": 20,
+    "penalty": "Item Destroyed"
+  },
+  {
+    "gear": "Armor",
+    "item": "Elunium (985)",
+    "probability": "Normal",
+    "levels": [
+      1
+    ],
+    "is_shadow": true,
+    "min_refine": 0,
+    "max_refine": 10,
+    "penalty": "Item Destroyed"
+  },
+  {
+    "gear": "Armor",
+    "item": "HD Elunium (6241)",
+    "probability": "Normal",
+    "levels": [
+      1
+    ],
+    "is_shadow": true,
+    "min_refine": 0,
+    "max_refine": 10,
+    "penalty": "Refine Decreased by 1"
+  },
+  {
+    "gear": "Armor",
+    "item": "Etherium (1000331)",
+    "probability": "Normal",
+    "levels": [
+      2
+    ],
+    "is_shadow": false,
+    "min_refine": 0,
+    "max_refine": 10,
+    "penalty": "Refine Decreased by 3"
+  },
+  {
+    "gear": "Armor",
+    "item": "Carnium (6223)",
+    "probability": "Normal",
+    "levels": [
+      1
+    ],
+    "is_shadow": false,
+    "min_refine": 9,
+    "max_refine": 20,
+    "penalty": "Refine Decreased by 3-OR- Item Destroyed (Rare)"
+  },
+  {
+    "gear": "Armor",
+    "item": "HD Carnium (6225)",
+    "probability": "Normal",
+    "levels": [
+      1
+    ],
+    "is_shadow": false,
+    "min_refine": 9,
+    "max_refine": 20,
+    "penalty": "Refine Decreased by 1*"
+  },
+  {
+    "gear": "Armor",
+    "item": "Etel Carnium (1000370)",
+    "probability": "Normal",
+    "levels": [
+      2
+    ],
+    "is_shadow": false,
+    "min_refine": 9,
+    "max_refine": 20,
+    "penalty": "Item Destroyed"
+  },
+  {
+    "gear": "Armor",
+    "item": "Enriched Elunium (7619)",
+    "probability": "Special",
+    "levels": [
+      1
+    ],
+    "is_shadow": true,
+    "min_refine": 0,
+    "max_refine": 10,
+    "penalty": "Item Destroyed"
+  },
+  {
+    "gear": "Armor",
+    "item": "Enriched Etherium (1000333)",
+    "probability": "Special",
+    "levels": [
+      2
+    ],
+    "is_shadow": false,
+    "min_refine": 0,
+    "max_refine": 10,
+    "penalty": "Refine Decreased by 1"
+  },
+  {
+    "gear": "Armor",
+    "item": "HD Etherium (1000335)",
+    "probability": "Special",
+    "levels": [
+      2
+    ],
+    "is_shadow": false,
+    "min_refine": 9,
+    "max_refine": 15,
+    "penalty": "Item Destroyed"
+  },
+  {
+    "gear": "Armor",
+    "item": "HD Etel Carnium (1000371)",
+    "probability": "Special",
+    "levels": [
+      2
+    ],
+    "is_shadow": false,
+    "min_refine": 14,
+    "max_refine": 20,
+    "penalty": "Item Destroyed"
+  }
+]
