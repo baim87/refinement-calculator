@@ -4,15 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>MuhRO Refinement Calculator</title>
-    
-    <meta name="description" content="MuhRO Refine Calculator helps Ragnarok Online players calculate expected material to get certain refinement level.">
-    <meta name="keywords" content="Ragnarok Online, MuhRO, refinement calculator, gaming tools">
-    <meta name="author" content="HolySoul88">  
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700&family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <link rel="icon" type="image/x-icon" href="./favicon.ico" />    
 
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700&family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">    
+    <meta name="description" content="Quickly calculate your Ragnarok Online (MuhRO) item refinements for weapons, armor, and accessories. Easy-to-use and accurate RO refinement calculator.">
+    <meta name="keywords" content="Ragnarok Online, MuhRO, refinement calculator, RO calculator, item upgrade, RO tools">
+    <meta name="author" content="HolySoul88">
+    <link rel="icon" type="image/x-icon" href="./favicon.ico" />
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700&family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
     <style>
@@ -73,6 +70,19 @@
             color: var(--muhro-accent);
             font-weight: 600;
         }
+
+        .help-link {
+            display: inline-block;
+            margin-top: 5px;
+            font-size: 0.85rem;
+            color: var(--muhro-accent);
+            text-decoration: none;
+            border-bottom: 1px dashed var(--muhro-accent);
+            transition: opacity 0.2s;
+            cursor: pointer;
+        }
+
+        .help-link:hover { opacity: 0.7; }
 
         .form-row {
             display: flex;
@@ -254,7 +264,91 @@
             background: #ffe5e5;
             border-radius: 6px;
         }
+
+        /* --- Modal Styles --- */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(15, 52, 96, 0.7); /* Muhro blue transparent */
+            backdrop-filter: blur(4px);
+        }
+
+        .modal-content {
+            background-color: var(--card-bg);
+            margin: 8% auto;
+            padding: 30px;
+            border-radius: 12px;
+            width: 90%;
+            max-width: 550px;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.5);
+            position: relative;
+            animation: modalSlideIn 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        @keyframes modalSlideIn {
+            from { opacity: 0; transform: translateY(-30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            color: var(--text-muted);
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: color 0.2s;
+        }
+
+        .modal-close:hover {
+            color: var(--muhro-accent);
+        }
+
+        .modal-title {
+            font-family: 'Montserrat', sans-serif;
+            color: var(--muhro-blue);
+            margin-top: 0;
+            border-bottom: 2px solid var(--border-color);
+            padding-bottom: 15px;
+            font-size: 1.4rem;
+        }
+
+        .modal-body {
+            font-size: 0.95rem;
+            line-height: 1.6;
+            color: var(--text-main);
+            max-height: 60vh;
+            overflow-y: auto;
+            padding-right: 10px;
+        }
+
+        .modal-body p { margin-bottom: 12px; }
+        .modal-body h4 { color: var(--muhro-accent); margin-bottom: 5px; font-family: 'Montserrat', sans-serif; }
+        .modal-body ul { margin-top: 0; padding-left: 20px; }
+        .modal-body li { margin-bottom: 8px; }
+        /* ------------------- */
     </style>
+        <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "MuhRO Refinement Calculator",
+      "url": "https://baim87.github.io/ragnarok-refinement-calculator/",
+      "applicationCategory": "GameApplication",
+      "operatingSystem": "Web",
+      "description": "Quickly calculate your Ragnarok Online (MuhRO) item refinements for weapons, armor, and accessories.",
+      "creator": {
+        "@type": "Person",
+        "name": "HolySoul88"
+      }
+    }
+    </script>
 </head>
 <body>
 
@@ -263,6 +357,7 @@
         
         <div class="header">
             <h1>MuhRO <span>Refine Calc</span></h1>
+            <a class="help-link" id="openHelpModal">How to use this calculator?</a>
         </div>
         
         <div class="form-row">
@@ -307,13 +402,13 @@
         </div>
 
         <div class="checkbox-group">
-            <input type="checkbox" id="useSafe" class="calc-input" checked>
+            <input type="checkbox" id="useSafe" class="calc-input">
             <label for="useSafe">Prioritize "Safe" / HD Materials (Prevents destruction)</label>
         </div>
 
         <div class="checkbox-group">
             <input type="checkbox" id="breakdownMats" class="calc-input">
-            <label for="breakdownMats">Show recursive raw materials breakdown (Etel Dust, Rough Oridecon, etc.)</label>
+            <label for="breakdownMats">Show recursive raw materials breakdown (Etel Dust, Oridecon, etc.)</label>
         </div>
 
         <div id="calculatorUI" style="display: none;">
@@ -336,13 +431,41 @@
         </div>
 
         <div class="other-tools">
-            Check out my other tools:<br>
+            Check out my other tool:<br>
             <a href="https://baim87.github.io/ragnarok-consumable-calculator/" target="_blank">Consumable Calculator</a>
         </div>
     </div>
 
     <div class="footer">
         Created with <span class="heart">&hearts;</span> by <span class="author">HolySoul88</span>
+    </div>
+</div>
+
+<div id="helpModal" class="modal-overlay">
+    <div class="modal-content">
+        <span class="modal-close" id="closeHelpModal">&times;</span>
+        <h2 class="modal-title">How to Use the Calculator</h2>
+        <div class="modal-body">
+            <p>This tool calculates the <strong>Average Expected Cost</strong> to refine an item based on official MuhRO probability rates, taking into account failures and item degradation.</p>
+            
+            <h4>1. Select Your Gear</h4>
+            <p>Choose your gear type and its weapon/armor level. For Shadow Gear, the level doesn't matter (max refinement is capped at +10).</p>
+
+            <h4>2. Set Your Goals</h4>
+            <p>Enter the item's <strong>Current Refine</strong> and the <strong>Target Refine</strong> you wish to reach. The calculator will figure out the exact path between those two numbers.</p>
+
+            <h4>3. Probability Rule</h4>
+            <ul>
+                <li><strong>Normal:</strong> Standard refinement rates using regular ores.</li>
+                <li><strong>Special:</strong> Higher success rates generally used with Cash Shop or Enriched materials.</li>
+            </ul>
+
+            <h4>4. Safe Materials</h4>
+            <p>If the box is checked, the calculator will mathematically prioritize "HD" or other non-breaking materials once they become available (usually at +7 or +9), ensuring your item won't be destroyed on failure.</p>
+
+            <h4>5. Raw Material Breakdown</h4>
+            <p>If you prefer farming over buying directly, check this box! It will reveal a secondary list showing exactly how many base items (like <em>Etel Dust</em> or <em> Oridecon</em>) you need to craft all the higher-tier materials.</p>
+        </div>
     </div>
 </div>
 
@@ -364,7 +487,6 @@
         return res;
     }
 
-    // Fully Recursive Breakdown logic with the new Oridecon/Elunium exception
     function resolveBaseMaterials(itemName, amount = 1, breakdown = false) {
         let res = {};
         
@@ -418,6 +540,23 @@
     }
 
     $(document).ready(function() {
+        // --- Modal Event Listeners ---
+        $('#openHelpModal').on('click', function(e) {
+            e.preventDefault();
+            $('#helpModal').fadeIn(200);
+        });
+
+        $('#closeHelpModal').on('click', function() {
+            $('#helpModal').fadeOut(200);
+        });
+
+        $(window).on('click', function(e) {
+            if ($(e.target).is('#helpModal')) {
+                $('#helpModal').fadeOut(200);
+            }
+        });
+        // -----------------------------
+
         $('#gearType').on('change', function() {
             let type = $(this).val();
             let $lvl = $('#gearLevel');
@@ -529,7 +668,7 @@
             let matCostDir = resolveBaseMaterials(rule.item, 1, false);
             let step_cost_dir = {};
             if (rule.penalty.includes("Destroyed")) {
-                let fail_dir = addCost(matCostDir, {"Base Gear Spare": 1});
+                let fail_dir = addCost(matCostDir, {"Base Gear (Before Refining)": 1});
                 for(let i=0; i<L; i++) fail_dir = addCost(fail_dir, step_costs_dir[i]);
                 step_cost_dir = addCost(matCostDir, multiplyCost(fail_dir, fails_avg));
             } else if (rule.penalty.includes("Decreased by 1")) {
@@ -547,7 +686,7 @@
             let matCostRaw = resolveBaseMaterials(rule.item, 1, true);
             let step_cost_raw = {};
             if (rule.penalty.includes("Destroyed")) {
-                let fail_raw = addCost(matCostRaw, {"Base Gear Spare": 1});
+                let fail_raw = addCost(matCostRaw, {"Base Gear (Before Refining)": 1});
                 for(let i=0; i<L; i++) fail_raw = addCost(fail_raw, step_costs_raw[i]);
                 step_cost_raw = addCost(matCostRaw, multiplyCost(fail_raw, fails_avg));
             } else if (rule.penalty.includes("Decreased by 1")) {
