@@ -27,7 +27,6 @@
         }
         }
     </script>
-    <!-- Google tag (gtag.js) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-1WV7XEWYPE"></script>
     <script>
         window.dataLayer = window.dataLayer || [];
@@ -168,11 +167,11 @@
             <div class="form-row">
                 <div class="form-group">
                     <label>Current Refine</label>
-                    <input type="number" id="currentRefine" class="calc-input" min="0" max="19" value="11">
+                    <input type="number" id="currentRefine" class="calc-input" min="0" max="19" value="0">
                 </div>
                 <div class="form-group">
                     <label>Target Refine</label>
-                    <input type="number" id="targetRefine" class="calc-input" min="1" max="20" value="20">
+                    <input type="number" id="targetRefine" class="calc-input" min="1" max="20" value="9">
                 </div>
             </div>
 
@@ -197,7 +196,7 @@
             </div>
 
             <div class="checkbox-group" id="wrapBsb" style="display: none; border-color: var(--success-color); background: var(--success-bg);">
-                <input type="checkbox" id="useBsb" class="calc-input" checked>
+                <input type="checkbox" id="useBsb" class="calc-input">
                 <label for="useBsb" style="font-weight: 700; color: var(--muhro-blue);">Use Blacksmith's Blessing to prevent destruction</label>
             </div>
 
@@ -356,8 +355,23 @@
         let res = {};
         if (itemName === 'Zeny') { res['Zeny'] = amount; return res; }
 
-        let skipRoughs = false;
-        if (itemName === "Oridecon (984)" || itemName === "Elunium (985)") skipRoughs = true;
+        const rawOres = [
+            "Oridecon (984)", 
+            "Elunium (985)", 
+            "Bradium (6224)", 
+            "Carnium (6225)",
+            "Zelunium (2537)",
+            "Shadowdecon (2539)",
+            "Enriched Oridecon (7619)",
+            "Enriched Elunium (7620)",
+            "HD Oridecon (6223)",
+            "HD Elunium (6222)",
+            "HD Bradium (6226)",
+            "HD Carnium (6227)",
+            "Etel Dust (1000322)"
+        ];
+
+        let skipRoughs = rawOres.includes(itemName);
 
         if (breakdown && costsData[itemName] && !skipRoughs) {
             let recipe = costsData[itemName][0]; 
@@ -403,8 +417,11 @@
             if (r.gear !== baseGearType) return false;
             if (L < r.min_refine || L >= r.max_refine) return false; 
             
-            if (isShadowUI) return r.is_shadow === true;
-            return r.is_shadow === false && r.levels.includes(level);
+            if (isShadowUI) {
+                return r.is_shadow === true;
+            } else {
+                return Array.isArray(r.levels) && r.levels.includes(level);
+            }
         });
 
         let specificLogic = rules.filter(r => r.probability === probLogic);
@@ -646,7 +663,6 @@
                 step_cost_dir = addCost(matCostDir, multiplyCost(matCostDir, fails_avg));
                 logPenalty = `<em style="color:var(--success-color);">None (Protected by BSB)</em>`;
             } else if (rule.penalty.includes("Destroyed")) {
-                // Instantly penalizes 1 Base Gear without recursing to +0
                 let fail_dir = addCost(matCostDir, {"Base Gear (Before Refining)": 1});
                 step_cost_dir = addCost(matCostDir, multiplyCost(fail_dir, fails_avg));
                 logPenalty = `<em style="color:var(--muhro-accent);">${rule.penalty}</em>`;
@@ -701,20 +717,38 @@
         let pRefineFee = parseInt($('#priceRefineFee').val().replace(/,/g, '')) || 0;
         let totalAttempts = prepared_dir['Refine Attempt'] || 0;
         if (pRefineFee > 0 && totalAttempts > 0) {
-            prepared_dir['NPC Refine Fee (Zeny)'] = totalAttempts * pRefineFee;
+            prepared_dir['NPC Refine Fee'] = totalAttempts * pRefineFee;
         }
 
         let total_raw = {};
         for (let k in prepared_dir) {
-            if (k === 'Zeny' || k === 'Refine Attempt' || k === 'Base Gear (Before Refining)' || k === 'NPC Refine Fee (Zeny)') {
+            if (k === 'Zeny' || k === 'Refine Attempt' || k === 'Base Gear (Before Refining)' || k === 'NPC Refine Fee') {
                 total_raw = addCost(total_raw, { [k]: prepared_dir[k] });
             } else {
                 let brokenDown = resolveBaseMaterials(k, prepared_dir[k], true);
                 total_raw = addCost(total_raw, brokenDown);
             }
         }
+        
+        let baseGearCountFromData = prepared_dir['Base Gear (Before Refining)'] || 0;
+        let requiresBaseGear = baseGearCountFromData > 0 && !useBsbChecked;
+        
+        if (requiresBaseGear) $('#wrapBaseGear').show();
+        else { $('#wrapBaseGear').hide(); $('#priceBase').val('0'); }
 
-        renderLists(prepared_dir, total_raw);
+        let pBase = parseInt($('#priceBase').val().replace(/,/g, '')) || 0;
+        let finalBaseGearCount = requiresBaseGear ? baseGearCountFromData : 0;
+        let baseGearZeny = finalBaseGearCount * pBase;
+        let npcRefineZeny = prepared_dir['NPC Refine Fee'] || 0;
+
+        // Ensure the visual list also removes it if BSB is checked
+        let filtered_prepared = {...prepared_dir};
+        let filtered_raw = {...total_raw};
+        if (useBsbChecked) {
+            delete filtered_prepared['Base Gear (Before Refining)'];
+            delete filtered_raw['Base Gear (Before Refining)'];
+        }
+        renderLists(filtered_prepared, filtered_raw);
         
         if (showBreakdown) {
             let directKeys = Object.keys(prepared_dir).filter(k => k !== 'Zeny' && !k.includes('Fee') && k !== 'Refine Attempt' && !k.includes('Base Gear'));
@@ -758,14 +792,14 @@
             if (strictlyRawKeys.length === 0) $('#marketRawItemsWrapper').hide();
             else $('#marketRawItemsWrapper').show();
 
-            let requiresBaseGear = prepared_dir['Base Gear (Before Refining)'] || false;
-            if (requiresBaseGear) $('#wrapBaseGear').show();
+            // FIXED: Apply `!useBsbChecked` correctly to ensure UI hides during Market Breakdown analysis
+            let requiresBaseGearBreakdown = (prepared_dir['Base Gear (Before Refining)'] > 0) && !useBsbChecked;
+            if (requiresBaseGearBreakdown) $('#wrapBaseGear').show();
             else { $('#wrapBaseGear').hide(); $('#priceBase').val('0'); }
 
-            let pBase = parseInt($('#priceBase').val().replace(/,/g, '')) || 0;
-            let baseGearCount = prepared_dir['Base Gear (Before Refining)'] || 0;
-            let baseGearZeny = baseGearCount * pBase;
-            let npcRefineZeny = prepared_dir['NPC Refine Fee (Zeny)'] || 0;
+            let pBaseConfig = parseInt($('#priceBase').val().replace(/,/g, '')) || 0;
+            let baseGearCountConfig = requiresBaseGearBreakdown ? (prepared_dir['Base Gear (Before Refining)'] || 0) : 0;
+            let baseGearZenyBreakdown = baseGearCountConfig * pBaseConfig;
 
             // Option B Math
             let optB_MatsCost = 0;
@@ -776,7 +810,7 @@
                 if (price === 0) optionB_Valid = false; 
                 optB_MatsCost += prepared_dir[k] * price;
             });
-            let optB_BaseZeny = (prepared_dir['Zeny'] || 0) + npcRefineZeny + baseGearZeny;
+            let optB_BaseZeny = (prepared_dir['Zeny'] || 0) + npcRefineZeny + baseGearZenyBreakdown;
             let optB_Total = optB_BaseZeny + optB_MatsCost;
 
             // Option A Math
@@ -787,7 +821,7 @@
                 optA_MatsCost += total_raw[k] * price;
             });
             let craftingFeeZeny = total_raw['Zeny'] || 0; 
-            let optA_TotalRawZeny = craftingFeeZeny + npcRefineZeny + baseGearZeny;
+            let optA_TotalRawZeny = craftingFeeZeny + npcRefineZeny + baseGearZenyBreakdown;
             let optA_Total = optA_TotalRawZeny + optA_MatsCost;
 
             // Breakdown UI
@@ -795,7 +829,7 @@
             $('#optA_Breakdown').html(`
                 <div style="display:flex; justify-content:space-between;"><span>Crafting Zeny Fee:</span> <span>${craftingFeeZeny.toLocaleString()} z</span></div>
                 <div style="display:flex; justify-content:space-between;"><span>NPC Refine Fee:</span> <span>${npcRefineZeny.toLocaleString()} z</span></div>
-                ${baseGearCount > 0 ? `<div style="display:flex; justify-content:space-between;"><span>Base Gear Replace:</span> <span>${baseGearZeny.toLocaleString()} z</span></div>` : ''}
+                ${baseGearCountConfig > 0 ? `<div style="display:flex; justify-content:space-between;"><span>Base Gear Replace:</span> <span>${baseGearZenyBreakdown.toLocaleString()} z</span></div>` : ''}
                 <div style="display:flex; justify-content:space-between; font-weight:bold; margin-top:4px; padding-top:4px; border-top:1px solid #ddd;"><span>Raw Market Items:</span> <span>${optA_MatsCost.toLocaleString()} z</span></div>
             `);
             
@@ -805,7 +839,7 @@
                 $('#optB_Breakdown').html(`
                     ${optBCraftingFee > 0 ? `<div style="display:flex; justify-content:space-between;"><span>Partial Craft Fee:</span> <span>${optBCraftingFee.toLocaleString()} z</span></div>` : ''}
                     <div style="display:flex; justify-content:space-between;"><span>NPC Refine Fee:</span> <span>${npcRefineZeny.toLocaleString()} z</span></div>
-                    ${baseGearCount > 0 ? `<div style="display:flex; justify-content:space-between;"><span>Base Gear Replace:</span> <span>${baseGearZeny.toLocaleString()} z</span></div>` : ''}
+                    ${baseGearCountConfig > 0 ? `<div style="display:flex; justify-content:space-between;"><span>Base Gear Replace:</span> <span>${baseGearZenyBreakdown.toLocaleString()} z</span></div>` : ''}
                     <div style="display:flex; justify-content:space-between; font-weight:bold; margin-top:4px; padding-top:4px; border-top:1px solid #ddd;"><span>Direct Market Items:</span> <span>${optB_MatsCost.toLocaleString()} z</span></div>
                 `);
 
@@ -874,7 +908,7 @@
             }
             
             let displayItem = '';
-            if (k === 'Zeny') displayItem = `<div class="material-name-container" style="font-weight: 700;">Material Crafting Fee (Zeny)</div>`;
+            if (k === 'Zeny') displayItem = `<div class="material-name-container" style="font-weight: 700;">Material Crafting Fee </div>`;
             else if (k.includes('Fee')) displayItem = `<div class="material-name-container" style="font-weight: 700;">${k}</div>`;
             else displayItem = `<div class="material-name-container">${formatItemName(k, true)}</div>`;
             
