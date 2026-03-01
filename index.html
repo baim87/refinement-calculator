@@ -9,6 +9,23 @@
     <meta name="keywords" content="Ragnarok Online, MuhRO, refinement calculator, RO calculator, item upgrade, RO tools">
     <meta name="author" content="HolySoul88">
     <link rel="icon" type="image/x-icon" href="./favicon.ico" />
+
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "MuhRO Refinement Calculator",
+      "url": "https://baim87.github.io/ragnarok-refinement-calculator/",
+      "applicationCategory": "GameApplication",
+      "operatingSystem": "Web",
+      "description": "Quickly calculate your Ragnarok Online (MuhRO) item refinements for weapons, armor, and accessories.",
+      "creator": {
+        "@type": "Person",
+        "name": "HolySoul88"
+      }
+    }
+    </script>
+
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700&family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
@@ -102,7 +119,7 @@
             font-size: 0.95rem;
         }
 
-        select, input[type="number"] { 
+        select, input[type="number"], input[type="text"] { 
             width: 100%; 
             padding: 10px 12px; 
             border: 2px solid var(--border-color); 
@@ -143,6 +160,36 @@
             color: var(--text-main);
             font-size: 0.9rem;
         }
+
+        /* --- Market Prices Config --- */
+        .market-prices-box {
+            background: #eef2f5;
+            padding: 15px;
+            border-radius: 6px;
+            border: 1px dashed var(--muhro-blue);
+            margin-bottom: 20px;
+            display: none;
+        }
+
+        .market-prices-box .title {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 700;
+            color: var(--muhro-blue);
+            font-size: 0.9rem;
+            margin-bottom: 15px;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 5px;
+        }
+
+        .market-label-link {
+            color: var(--muhro-blue);
+            text-decoration: none;
+            border-bottom: 1px dashed var(--muhro-blue);
+            transition: opacity 0.2s;
+            font-weight: 700;
+        }
+
+        .market-label-link:hover { opacity: 0.7; }
 
         .results-wrapper {
             display: flex;
@@ -208,7 +255,7 @@
 
         .other-tools a {
             display: inline-block;
-            margin-top: 8px;
+            margin: 4px 8px;
             color: var(--muhro-blue);
             text-decoration: none;
             font-weight: 700;
@@ -274,7 +321,7 @@
             top: 0;
             width: 100%;
             height: 100%;
-            background-color: rgba(15, 52, 96, 0.7); /* Muhro blue transparent */
+            background-color: rgba(15, 52, 96, 0.7); 
             backdrop-filter: blur(4px);
         }
 
@@ -332,23 +379,7 @@
         .modal-body h4 { color: var(--muhro-accent); margin-bottom: 5px; font-family: 'Montserrat', sans-serif; }
         .modal-body ul { margin-top: 0; padding-left: 20px; }
         .modal-body li { margin-bottom: 8px; }
-        /* ------------------- */
     </style>
-        <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@type": "WebApplication",
-      "name": "MuhRO Refinement Calculator",
-      "url": "https://baim87.github.io/ragnarok-refinement-calculator/",
-      "applicationCategory": "GameApplication",
-      "operatingSystem": "Web",
-      "description": "Quickly calculate your Ragnarok Online (MuhRO) item refinements for weapons, armor, and accessories.",
-      "creator": {
-        "@type": "Person",
-        "name": "HolySoul88"
-      }
-    }
-    </script>
 </head>
 <body>
 
@@ -408,7 +439,23 @@
 
         <div class="checkbox-group">
             <input type="checkbox" id="breakdownMats" class="calc-input">
-            <label for="breakdownMats">Show recursive raw materials breakdown (Etel Dust, Oridecon, etc.)</label>
+            <label for="breakdownMats">Show recursive raw materials breakdown & calculate total Zeny cost</label>
+        </div>
+
+        <div id="marketPricesConfig" class="market-prices-box">
+            <div class="title">Market Prices (For Grand Total Calculation)</div>
+            
+            <div class="form-row" style="margin-bottom: 15px;">
+                <div class="form-group" style="margin-bottom:0;">
+                    <label style="font-size: 0.85rem; display: flex; align-items: center; gap: 6px; margin-bottom: 6px;">
+                        <span title="The zeny required to click 'Refine' at the Blacksmith NPC" style="border-bottom: 1px dotted var(--text-muted); cursor: help; font-weight: 700; color: var(--muhro-blue);">Cost per Refine (NPC Fee)</span>
+                    </label>
+                    <input type="text" inputmode="numeric" id="priceRefineFee" class="calc-input price-input-format" value="0">
+                </div>
+            </div>
+
+            <div id="dynamicPrices" style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
+                </div>
         </div>
 
         <div id="calculatorUI" style="display: none;">
@@ -425,13 +472,19 @@
                     <div id="rawMaterialsContainer"></div>
                 </div>
             </div>
+
+            <div id="grandTotalContainer" style="display:none; margin-top: 20px; background: var(--muhro-blue); color: #fff; padding: 15px; border-radius: 8px; text-align: center; box-shadow: 0 4px 10px rgba(0,0,0,0.2);">
+                <div style="font-family: 'Montserrat', sans-serif; font-size: 1.2rem; font-weight: 700;">Grand Total Equivalent: <span id="grandTotalAmount" style="color: var(--muhro-accent);"></span></div>
+                <div style="font-size: 0.85rem; margin-top: 8px; opacity: 0.9;" id="grandTotalBreakdown"></div>
+            </div>
             
             <label style="margin-top: 25px;">Refine Path Expected Actions</label>
             <div id="logContainer"></div>
         </div>
 
         <div class="other-tools">
-            Check out my other tool:<br>
+            Check out my other tools:<br>
+            <a href="https://baim87.github.io/ragnarok-grade-enhancing-calculator/" target="_blank">Grade Enhancing Calculator</a>
             <a href="https://baim87.github.io/ragnarok-consumable-calculator/" target="_blank">Consumable Calculator</a>
         </div>
     </div>
@@ -463,8 +516,8 @@
             <h4>4. Safe Materials</h4>
             <p>If the box is checked, the calculator will mathematically prioritize "HD" or other non-breaking materials once they become available (usually at +7 or +9), ensuring your item won't be destroyed on failure.</p>
 
-            <h4>5. Raw Material Breakdown</h4>
-            <p>If you prefer farming over buying directly, check this box! It will reveal a secondary list showing exactly how many base items (like <em>Etel Dust</em> or <em> Oridecon</em>) you need to craft all the higher-tier materials.</p>
+            <h4>5. Raw Breakdown & Grand Total</h4>
+            <p>If you prefer farming over buying directly, check this box! It will reveal a secondary list showing exactly how many base items (like <em>Etel Dust</em> or <em>Oridecon</em>) you need. You can input the <strong>Market Price</strong> for those base items, and the tool will calculate an exact <strong>Grand Total Zeny</strong> estimate!</p>
         </div>
     </div>
 </div>
@@ -487,9 +540,14 @@
         return res;
     }
 
+    // Fully Recursive Breakdown logic with Oridecon/Elunium exception
     function resolveBaseMaterials(itemName, amount = 1, breakdown = false) {
         let res = {};
-        
+        if (itemName === 'Zeny') {
+            res['Zeny'] = amount;
+            return res;
+        }
+
         let type = $('#gearType').val();
         let level = parseInt($('#gearLevel').val()) || 1;
         
@@ -512,7 +570,8 @@
         return res;
     }
 
-    function formatItemName(rawName, withIcon = true) {
+    // Extract ID, fetch MuhRO Icon, and build clickable Link
+    function formatItemName(rawName, withIcon = true, forceWhite = false) {
         let match = rawName.match(/^(.*?)\s*\((\d+)\)$/);
         
         if (match) {
@@ -526,21 +585,43 @@
                 iconHtml = `<img src="${matIconUrl}" class="item-icon" onerror="this.style.display='none'">`;
             }
             
+            let linkColor = forceWhite ? "#ffffff" : "var(--muhro-blue)";
+
             return `
-                <div class="material-name-container">
+                <div class="material-name-container" ${forceWhite ? 'style="color: #ffffff;"' : ''}>
                     ${iconHtml}
-                    <a href="${matDbLink}" target="_blank" title="View in MuhRO Database" style="color: var(--muhro-blue); text-decoration: none; font-weight: 700; border-bottom: 1px dashed var(--muhro-blue); transition: opacity 0.2s;">
+                    <a href="${matDbLink}" class="market-label-link" target="_blank" title="View in MuhRO Database" style="color: ${linkColor}; text-decoration: none; font-weight: 700; border-bottom: 1px dashed ${linkColor}; transition: opacity 0.2s;">
                         ${itemName}
                     </a>
                 </div>
             `;
         }
         
-        return `<div class="material-name" style="font-weight: 700; color: var(--text-main);">${rawName}</div>`;
+        return `<div class="material-name-container" style="font-weight: 700;">${rawName}</div>`;
     }
 
     $(document).ready(function() {
-        // --- Modal Event Listeners ---
+        
+        // Input Formatting for Commas
+        $(document).on('input', '.price-input-format', function() {
+            let rawValue = $(this).val().replace(/\D/g, ''); 
+            if (rawValue !== '') {
+                $(this).val(parseInt(rawValue, 10).toLocaleString('en-US'));
+            } else {
+                $(this).val('');
+            }
+        });
+
+        // Toggle Breakdown Market Input Container
+        $('#breakdownMats').on('change', function() {
+            if ($(this).is(':checked')) {
+                $('#marketPricesConfig').slideDown(200);
+            } else {
+                $('#marketPricesConfig').slideUp(200);
+            }
+        });
+
+        // Modal Event Listeners
         $('#openHelpModal').on('click', function(e) {
             e.preventDefault();
             $('#helpModal').fadeIn(200);
@@ -555,8 +636,8 @@
                 $('#helpModal').fadeOut(200);
             }
         });
-        // -----------------------------
 
+        // Trigger logic on core dropdown updates
         $('#gearType').on('change', function() {
             let type = $(this).val();
             let $lvl = $('#gearLevel');
@@ -586,7 +667,11 @@
             calculate();
         });
 
-        $('.calc-input').on('change input', calculate);
+        // Trigger logic on any value change
+        $(document).on('change input', '.calc-input', function() {
+            calculate();
+        });
+
         calculate(); 
     });
 
@@ -666,6 +751,8 @@
             let fails_avg = (1 - pRate) / pRate;
             
             let matCostDir = resolveBaseMaterials(rule.item, 1, false);
+            matCostDir['Refine Attempt'] = 1;
+            
             let step_cost_dir = {};
             if (rule.penalty.includes("Destroyed")) {
                 let fail_dir = addCost(matCostDir, {"Base Gear (Before Refining)": 1});
@@ -684,6 +771,8 @@
             step_costs_dir[L] = step_cost_dir;
 
             let matCostRaw = resolveBaseMaterials(rule.item, 1, true);
+            matCostRaw['Refine Attempt'] = 1;
+
             let step_cost_raw = {};
             if (rule.penalty.includes("Destroyed")) {
                 let fail_raw = addCost(matCostRaw, {"Base Gear (Before Refining)": 1});
@@ -705,9 +794,9 @@
                 total_dir = addCost(total_dir, step_cost_dir);
                 total_raw = addCost(total_raw, step_cost_raw);
                 
-                let logFormattedItem = formatItemName(rule.item, false);
+                let displayHTML = formatItemName(rule.item, false);
                 log.push(`<div class="log-entry" style="display:flex; flex-direction:column; gap:4px;">
-                            <div><strong>+${L} &rarr; +${L+1}</strong> : Used ${logFormattedItem} (Success: ${(pRate * 100).toFixed(1)}%)</div>
+                            <div><strong>+${L} &rarr; +${L+1}</strong> : Used ${displayHTML} (Success: ${(pRate * 100).toFixed(1)}%)</div>
                             <small>Penalty on Fail: <em>${rule.penalty}</em></small>
                           </div>`);
             }
@@ -715,6 +804,55 @@
 
         renderLists(total_dir, total_raw);
         
+        if (showBreakdown) {
+            
+            // Generate necessary dynamic inputs
+            let requiredKeys = Object.keys(total_raw).filter(k => k !== 'Zeny' && k !== 'Refine Attempt');
+            $('.market-price-group').hide();
+            
+            requiredKeys.forEach(k => {
+                let safeKey = k.replace(/[^a-zA-Z0-9]/g, '');
+                let inputId = 'price_' + safeKey;
+                
+                if ($('#' + inputId).length === 0) {
+                     $('#dynamicPrices').append(`
+                         <div class="form-group market-price-group" id="group_${safeKey}" style="margin-bottom:0;">
+                            <label style="font-size: 0.85rem; display: flex; align-items: center; gap: 6px; margin-bottom: 6px;">
+                                ${formatItemName(k, true, false)}
+                            </label>
+                            <input type="text" inputmode="numeric" id="${inputId}" data-key="${k}" class="calc-input price-input-format dynamic-price-input" value="0">
+                         </div>
+                     `);
+                }
+                $('#group_' + safeKey).show();
+            });
+
+            // Perform Calculation using stripped comma values
+            let matsMarketCost = 0;
+            $('.dynamic-price-input:visible').each(function() {
+                let key = $(this).data('key');
+                let price = parseInt($(this).val().replace(/,/g, '')) || 0;
+                let quantity = Math.ceil(total_raw[key] || 0);
+                matsMarketCost += (price * quantity);
+            });
+
+            let pRefineFee = parseInt($('#priceRefineFee').val().replace(/,/g, '')) || 0;
+            let totalAttempts = Math.ceil(total_raw['Refine Attempt'] || 0);
+            let refineFeeTotal = totalAttempts * pRefineFee;
+
+            let baseZeny = Math.round(total_dir['Zeny'] || 0);
+            let totalRawZeny = Math.round(total_raw['Zeny'] || 0);
+            let craftingZeny = totalRawZeny - baseZeny; 
+            
+            let grandTotal = totalRawZeny + matsMarketCost + refineFeeTotal;
+
+            $('#grandTotalAmount').text(grandTotal.toLocaleString() + ' z');
+            $('#grandTotalBreakdown').html(`(Crafting & NPC Zeny: ${totalRawZeny.toLocaleString()} z &nbsp;|&nbsp; Refine Fees: ${refineFeeTotal.toLocaleString()} z &nbsp;|&nbsp; Market Items: ${matsMarketCost.toLocaleString()} z)`);
+            $('#grandTotalContainer').show();
+        } else {
+            $('#grandTotalContainer').hide();
+        }
+
         $('#logContainer').html(`
             <div style="margin-bottom: 10px; font-weight: bold; color: var(--muhro-blue);">
                 Calculating journey from +${currentRefine} to +${target}:
@@ -728,6 +866,7 @@
         $('#directMaterialsContainer').html(`<div class="error-message">${msg}</div>`);
         $('#rawMaterialsContainer').empty();
         $('#rawCol').hide();
+        $('#grandTotalContainer').hide();
         $('#logContainer').empty();
         $('#calculatorUI').fadeIn();
     }
@@ -745,6 +884,9 @@
         let hasData = false;
         
         keys.forEach(k => {
+            // Hide the virtual Refine tracking variable
+            if (k === 'Refine Attempt') return;
+
             let val = dataObj[k];
             if (val <= 0) return; 
             
@@ -755,7 +897,7 @@
                 val = Math.ceil(val).toLocaleString();
             }
             
-            let displayItem = formatItemName(k, true);
+            let displayItem = formatItemName(k, true, false);
             
             html += `
                 <div class="material-row">
